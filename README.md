@@ -1,2 +1,2 @@
 # algoritimando
-Algoritimando: jogo educativo em HTML, CSS e JavaScript que ensina lógica de algoritmos ao montar sequências de passos.
+Algoritimando é um jogo web educativo, feito com HTML, CSS e JavaScript puros e baseado em um protótipo do Figma. O jogador vira um agente da Central de chamados e ajuda um Robô-guia a atender 4 pedidos (Sanduíche, Robô e o cubo, Mochila e Abelhas), arrastando os passos para a ordem correta. Assim, aprende de forma lúdica a pensar em sequência, como um algoritmo. O jogo tem escolha de agente, sistema de estrelas e dicas, sons e uma tela de promoção ao final.
