@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Algoritimando</title>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;700&family=Nunito:wght@600;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div id="stage">
+
+  <section class="screen bg-city" id="menu">
+    <h1 class="logo">Algoritimando</h1><img class="menu-robo" src="img/robo-sorrindo.png" alt="">
+    <div class="menu-btns">
+      <button class="btn" id="bPlay">Jogar</button>
+      <button class="btn green" id="bSound">Sons: ligado</button>
+      <button class="btn ghost" id="bHow">Como jogar</button>
+    </div>
+  </section>
+
+  <section class="screen" id="story">
+    <div class="scene" id="sceneArt"></div>
+    <button class="btn small skip" id="bSkip">Pular ›</button>
+    <p class="caption" id="sceneText"></p>
+    <div class="dots" id="dots"></div>
+    <button class="btn next" id="bNext">Avançar ›</button>
+  </section>
+
+  <section class="screen bg-sand" id="char">
+    <div class="panel char-panel">
+      <div class="badge-big"><img id="badgeFace" src="img/av0.png" alt=""><b id="badgeName">Agente</b><i>★★★★★</i></div>
+      <div class="char-form">
+        <h2>Quem é você, agente?</h2>
+        <div class="avatars">
+          <button class="avatar sel" data-a="0" aria-label="Agente 1"><img src="img/av0.png" alt=""></button>
+          <button class="avatar" data-a="1" aria-label="Agente 2"><img src="img/av1.png" alt=""></button>
+        </div>
+        <input id="nameIn" maxlength="14" placeholder="✏️ Digite seu nome">
+        <button class="btn" id="bConfirm">Confirmar</button>
+      </div>
+    </div>
+  </section>
+
+  <section class="screen bg-hub" id="hub">
+    <header class="top"><button class="chip home" data-home>🏠</button><span class="chip who"></span>
+      <h2 class="title-box">Central de chamados</h2><span class="chip starsum">⭐ <b id="hubStars">0</b></span></header>
+    <div class="hub-grid" id="calls"></div>
+    <aside class="side">
+      <div class="guide"><div class="face"><img src="img/guide.png" alt=""></div><b>Robô-guia</b><p id="hubMsg"></p></div>
+      <div class="guide prog"><small>Chamados concluídos</small><strong id="progTxt">0 de 4</strong><div class="bar"><i id="progBar"></i></div></div>
+    </aside>
+  </section>
+
+  <section class="screen" id="level">
+    <header class="top"><button class="chip home" data-home>🏠</button><span class="chip who"></span>
+      <h2 class="title-box" id="goal"></h2><span class="chip starsum">⭐ <b class="gStars">0</b></span></header>
+    <div class="left-art"></div>
+    <div class="board" id="board"></div>
+    <aside class="side"><div class="guide"><div class="face" id="lvFace"><img src="img/guide.png" alt=""></div><b>Robô-guia</b><p id="guideMsg"></p></div></aside>
+    <div class="tray" id="tray"></div>
+    <div class="actions"><button class="chip" id="bHint">💡 Dica <b id="hintN">1</b></button><button class="btn small" id="bCheck">Verificar ✓</button></div>
+    <span class="chip lvl" id="lvlTxt"></span>
+    <div class="speech" id="speech"><p></p><button class="btn small" id="bRetry">Tentar de novo ↺</button></div>
+  </section>
+
+  <section class="screen" id="win">
+    <div class="win-art"></div>
+    <div class="panel win-panel">
+      <div class="guide"><div class="face"><img src="img/guide.png" alt=""></div><b>Robô-guia</b><p id="winMsg">Nível concluído! Clique no botão para retornar à central.</p></div>
+      <div class="rewards"><div><span id="winStars">⭐</span><b>+<span id="winN">1</span> estrela</b></div><div><span>🪪</span><b>+1 dica</b></div></div>
+      <button class="btn brown" id="bBack"><span class="mini"></span>Retornar</button>
+    </div>
+  </section>
+
+  <section class="screen bg-promo" id="promo">
+    <header class="top"><button class="chip home" data-home>🏠</button><span class="chip who"></span><span class="chip starsum">⭐ <b class="gStars">4</b></span></header>
+    <div class="hero" id="promoHero"></div>
+    <aside class="promo-card"><h3 class="title-box">Promoção!</h3><div class="badge-sm">🪪</div>
+      <p class="rank"><span>Estagiário</span> → <span class="on">Agente</span></p><b>Agora você é Agente!</b>
+      <button class="btn small" id="bPromoNext">Continuar ›</button></aside>
+  </section>
+
+  <section class="screen bg-sand" id="final">
+    <div class="cast" id="cast"><img class="c" src="img/cliente0.png" alt=""><img class="c" src="img/cliente1.png" alt=""><img class="ag" id="finAg" src="img/agente-menina.png" alt=""><img class="rb" src="img/robo-feliz.png" alt=""><img class="c" src="img/cliente2.png" alt=""><img class="bee" src="img/cliente3.png" alt=""></div>
+    <div class="panel final-panel"><h2>Missão cumprida, <span id="finName"></span>!</h2>
+      <p>Você ensinou o robô a pensar em passos. Isso é um algoritmo!</p>
+      <div class="final-stars" id="finStars"></div>
+      <div class="row"><button class="btn" id="bAgain">Jogar de novo</button><button class="btn brown" id="bToHub">Voltar à central</button></div></div>
+  </section>
+
+  
+  <div class="modal" id="how"><div class="panel">
+    <h2>Como jogar</h2>
+    <p>1. Escolha um chamado na central.<br>2. Arraste os cards para os números, na ordem certa (ou toque neles).<br>3. Toque em Verificar. Errou? O robô dá uma pista.<br>4. Quanto menos erros, mais estrelas!</p>
+    <button class="btn" id="bHowClose">Entendi</button></div></div>
+</div>
+<script src="game.js"></script>
+</body>
+</html>
