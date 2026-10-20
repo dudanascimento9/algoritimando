@@ -180,6 +180,8 @@ function story(i) {
   si = i;
   const [a, bg, t] = STORY[i];
   $("#sceneArt").style.backgroundImage = "url(img/story" + (i + 1) + ".jpg)";
+  $("#sceneArt").style.backgroundPosition =
+    ["50%", "78%", "58%", "50%"][i] + " center";
   $("#sceneText").textContent = t;
   $("#dots").innerHTML = STORY.map(
     (_, k) => '<i class="' + (k === i ? "on" : "") + '"></i>',
