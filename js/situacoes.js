@@ -287,8 +287,7 @@ const SITUACAO_ROBO = {
   cena: 'img/pic2.webp',
   fundo: 'img/level2.webp',
   fundoConclusao: 'img/win2.webp',
-  // a imagem que se monta ao lado do tabuleiro (ver motor.js)
-  montagem: 'tirinha',
+  // sem montagem ao lado: a tirinha só repetia as cartas (revisão do professor)
   fases: [
 
     /* ---------- FASE 1 · a máquina precisa de ordem (3 passos) ---------- */
@@ -729,8 +728,7 @@ const SITUACAO_ABELHAS = {
   cena: 'img/pic4.webp',
   fundo: 'img/level4.webp',
   fundoConclusao: 'img/win4.webp',
-  // a imagem que se monta ao lado do tabuleiro (ver motor.js)
-  montagem: 'tirinha',
+  // sem montagem ao lado: a tirinha só repetia as cartas (revisão do professor)
   fases: [
 
     /* ---------- FASE 1 · a ordem importa (3 passos) ---------- */
@@ -958,8 +956,7 @@ const SITUACAO_MAOS = {
   cena: 'img/pic5.webp',
   fundo: 'img/level5.webp',
   fundoConclusao: 'img/win5.webp',
-  // um quadrinho por passo: lavar as mãos é uma história no tempo
-  montagem: 'tirinha',
+  // sem montagem ao lado: a tirinha só repetia as cartas (revisão do professor)
   // o selo da ideia: entregue na lição do último nível (ver motor.js)
   selo: {
     nome: 'Repetição',
@@ -1153,8 +1150,7 @@ const SITUACAO_RUA = {
   cena: 'img/pic6.webp',
   fundo: 'img/level6.webp',
   fundoConclusao: 'img/win6.webp',
-  // um quadrinho por passo: no erro, a história trava antes da faixa
-  montagem: 'tirinha',
+  // sem montagem ao lado: a tirinha só repetia as cartas (revisão do professor)
   // o selo da ideia: entregue na lição do último nível (ver motor.js)
   selo: {
     nome: 'Condição',
@@ -1314,8 +1310,7 @@ const SITUACAO_LIMONADA = {
   fundo: 'img/level7.webp',
   fundoConclusao: 'img/win7.webp',
   // um quadrinho por passo (uma "cena" da jarra pediria peças que
-  // ainda não existem; a tirinha funciona só com as cartas)
-  montagem: 'tirinha',
+  // sem montagem ao lado: a tirinha só repetia as cartas (revisão do professor)
   // o selo da ideia: entregue na lição do último nível (ver motor.js)
   selo: {
     nome: 'Ao mesmo tempo',
@@ -1470,8 +1465,7 @@ const SITUACAO_DENTES = {
   cena: 'img/pic8.webp',
   fundo: 'img/level8.webp',
   fundoConclusao: 'img/win8.webp',
-  // um quadrinho por passo: escovar os dentes é uma história no tempo
-  montagem: 'tirinha',
+  // sem montagem ao lado: a tirinha só repetia as cartas (revisão do professor)
   // o selo da ideia: entregue na lição do último nível (ver motor.js)
   selo: {
     nome: 'Abre e fecha',
