@@ -50,7 +50,7 @@
     { img: 'img/fim3.webp', reserva: 'img/story1.webp',
       texto: () => 'Cada chamado ensinou uma ideia: ordem, passos escondidos, repetição, condição, ao mesmo tempo, abre e fecha.' },
     { img: 'img/fim4.webp', reserva: 'img/story2.webp',
-      texto: () => 'Agora o Robô-guia segue qualquer passo a passo. Foi você quem ensinou!' },
+      texto: () => 'Agora você sabe montar um passo a passo para cada tarefa. O Robô-guia ficou orgulhoso!' },
     { img: 'img/fim5.webp', reserva: 'img/story3.webp', festa: true,
       texto: (_, nome) => `${nome}, você agora é Agente Sênior de Algoritimando!` },
     { img: 'img/fim6.webp', reserva: 'img/story1.webp',
@@ -181,7 +181,7 @@
     const nomeAgente = (perfil && perfil.nome) || 'Agente';
     $('#certNome').textContent = nomeAgente;
     $('#certTexto').textContent =
-      `atendeu os ${SITUACOES.length} chamados da cidade de Algoritimando, ensinando o Robô-guia passo a passo, e aprendeu estas ideias:`;
+      `atendeu os ${SITUACOES.length} chamados da cidade de Algoritimando, ajudando os moradores passo a passo, e aprendeu estas ideias:`;
     const lista = $('#certIdeias');
     lista.textContent = '';
     SITUACOES.forEach(s => {

@@ -20,7 +20,7 @@ Uma sequência de **6 quadros** que passa antes da tela "Missão cumprida", do m
 1. "Um dia, o mapa amanheceu diferente: todos os chamados tinham sido atendidos."
 2. "Os moradores prepararam uma surpresa na praça. Todos vieram agradecer!"
 3. "Cada chamado ensinou uma ideia: ordem, passos escondidos, repetição, condição, ao mesmo tempo, abre e fecha."
-4. "Agora o Robô-guia segue qualquer passo a passo. Foi você quem ensinou!"
+4. "Agora você sabe montar um passo a passo para cada tarefa. O Robô-guia ficou orgulhoso!"
 5. "[nome], você agora é Agente Sênior de Algoritimando!"
 6. "Os algoritmos estão em todo lugar. Que passo a passo você vai criar amanhã?"
 
