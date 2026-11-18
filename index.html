@@ -8,8 +8,8 @@
     />
     <title>Algoritimando</title>
     <!-- fontes guardadas no projeto: o jogo funciona sem internet -->
-    <link rel="stylesheet" href="fontes/fontes.css?v=202611181300" />
-    <link rel="stylesheet" href="style.css?v=202611181300" />
+    <link rel="stylesheet" href="fontes/fontes.css?v=202611181400" />
+    <link rel="stylesheet" href="style.css?v=202611181400" />
   </head>
   <body>
     <div id="stage">
@@ -164,6 +164,9 @@
             <div class="bar"><i id="progBar"></i></div>
             <!-- o próximo objetivo: Agente, Agente Sênior ou nenhum -->
             <small class="prog-meta" id="progMeta"></small>
+            <button class="btn small" id="bAlbum" type="button">
+              Meu álbum
+            </button>
             <button class="btn ghost small" id="bIdeias" type="button">
               Minhas ideias
             </button>
@@ -374,6 +377,14 @@
                   >+1 dica</b
                 >
               </div>
+              <!-- figurinha nova no álbum: só na primeira vez que o nível é concluído -->
+              <div class="premio-figurinha" hidden>
+                <svg viewBox="0 0 24 24" aria-hidden="true">
+                  <path d="M5 3h10l4 4v14H5Z" />
+                  <path d="M15 3v4h4" />
+                </svg>
+                <b>+1 figurinha</b>
+              </div>
             </div>
             <button class="btn conclusao-continuar" type="button">
               <span class="conclusao-continuar-texto">Próximo nível</span> ›
@@ -450,6 +461,40 @@
           <button class="btn ghost" id="bIdeiasFechar" type="button">
             Voltar ao mapa
           </button>
+        </div>
+      </div>
+
+      <!-- Meu álbum: uma figurinha (a imagem da lição) por nível concluído (album.js) -->
+      <div class="modal" id="album" role="dialog" aria-modal="true" aria-labelledby="album-h">
+        <div class="panel album-painel">
+          <header class="album-topo">
+            <h2 id="album-h">Meu álbum</h2>
+            <div class="album-progresso">
+              <small class="album-contador">0 de 32 figurinhas</small>
+              <div class="bar album-barra"><i></i></div>
+            </div>
+          </header>
+          <nav class="album-abas" aria-label="Chamados do álbum"></nav>
+          <div class="album-corpo">
+            <button class="chip album-anterior" type="button" aria-label="Página anterior">‹</button>
+            <section class="album-pagina">
+              <div class="album-cabeca">
+                <b class="album-titulo"></b>
+                <small class="album-local"></small>
+              </div>
+              <div class="album-espacos"></div>
+            </section>
+            <button class="chip album-proxima" type="button" aria-label="Próxima página">›</button>
+          </div>
+          <button class="btn ghost album-fechar" type="button">Voltar ao mapa</button>
+          <div class="album-zoom" hidden>
+            <div class="album-zoom-cartao">
+              <span class="album-zoom-imagem" role="img" aria-label="Figurinha"></span>
+              <small class="album-zoom-nivel"></small>
+              <b class="album-zoom-texto"></b>
+              <span class="album-zoom-dica">Toque para fechar</span>
+            </div>
+          </div>
         </div>
       </div>
 
@@ -666,17 +711,18 @@
          das cartas numa região, explicações de erro em outra -->
     <div class="sr leitor-avisos" aria-live="polite"></div>
     <div class="sr leitor-explicacao" aria-live="polite"></div>
-    <script src="js/motor.js?v=202611181300"></script>
-    <script src="js/comum.js?v=202611181300"></script>
-    <script src="js/situacoes.js?v=202611181300"></script>
-    <script src="js/em-progresso.js?v=202611181300"></script>
-    <script src="js/som.js?v=202611181300"></script>
-    <script src="js/progresso.js?v=202611181300"></script>
-    <script src="js/perfil.js?v=202611181300"></script>
-    <script src="js/arrasto.js?v=202611181300"></script>
-    <script src="js/conclusao.js?v=202611181300"></script>
-    <script src="js/montagem.js?v=202611181300"></script>
-    <script src="js/jogo.js?v=202611181300"></script>
-    <script src="js/app.js?v=202611181300"></script>
+    <script src="js/motor.js?v=202611181400"></script>
+    <script src="js/comum.js?v=202611181400"></script>
+    <script src="js/situacoes.js?v=202611181400"></script>
+    <script src="js/em-progresso.js?v=202611181400"></script>
+    <script src="js/som.js?v=202611181400"></script>
+    <script src="js/progresso.js?v=202611181400"></script>
+    <script src="js/perfil.js?v=202611181400"></script>
+    <script src="js/arrasto.js?v=202611181400"></script>
+    <script src="js/conclusao.js?v=202611181400"></script>
+    <script src="js/montagem.js?v=202611181400"></script>
+    <script src="js/jogo.js?v=202611181400"></script>
+    <script src="js/album.js?v=202611181400"></script>
+    <script src="js/app.js?v=202611181400"></script>
   </body>
 </html>

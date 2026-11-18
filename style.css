@@ -3686,7 +3686,8 @@ body.arrastando * {
   margin-top: 0.6cqw;
   line-height: 1.25;
 }
-.prog #bIdeias {
+.prog #bIdeias,
+.prog #bAlbum {
   margin-top: 0.9cqw;
   font-size: max(1.2cqw, 9px);
   padding: 0.4cqw 1.4cqw;
@@ -3863,7 +3864,8 @@ body.arrastando * {
     font-size: max(3.3cqw, 12px);
     margin-top: 1.4cqw;
   }
-  #stage .prog #bIdeias {
+  #stage .prog #bIdeias,
+  #stage .prog #bAlbum {
     margin-top: 2cqw;
     font-size: max(3.6cqw, 13px);
     padding: 1cqw 3cqw;
@@ -4767,5 +4769,407 @@ body.arrastando * {
       0 0 0 0.8cqw #ffe08a,
       0 0 0 1.6cqw #c98a12,
       0 0 5cqw 1.4cqw rgba(255, 196, 64, 0.65);
+  }
+}
+
+/* ===== Meu álbum: uma figurinha por nível concluído (album.js) ===== */
+.modal .album-painel {
+  position: relative;
+  width: min(86cqw, 96%);
+  max-height: 96cqh;
+  padding: 1.6cqw 2.4cqw;
+  gap: 1cqw;
+}
+.album-topo {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 2cqw;
+}
+.album-progresso {
+  width: 24cqw;
+  text-align: right;
+}
+.album-contador {
+  font-weight: 800;
+  font-size: max(1.3cqw, 11px);
+  color: #6a5238;
+}
+.album-barra {
+  margin-top: 0.4cqw;
+}
+.album-abas {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 0.8cqw;
+}
+.album-aba {
+  position: relative;
+  display: grid;
+  justify-items: center;
+  gap: 0.2cqw;
+  padding: 0.4cqw;
+  border: 0.25cqw solid transparent;
+  border-radius: 1.2cqw;
+  background: transparent;
+  cursor: pointer;
+  font: inherit;
+  color: var(--ink);
+}
+.album-aba img {
+  width: 4.6cqw;
+  height: 4.6cqw;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 0.25cqw solid var(--c, var(--brown));
+  background: #fff;
+}
+.album-aba small {
+  font-weight: 800;
+  font-size: max(1cqw, 10px);
+}
+.album-aba.ativa {
+  border-color: var(--c, var(--brown));
+  background: #fff;
+}
+.album-aba-nova {
+  position: absolute;
+  top: 0.2cqw;
+  right: 0.2cqw;
+  width: 1.2cqw;
+  height: 1.2cqw;
+  min-width: 9px;
+  min-height: 9px;
+  border-radius: 50%;
+  background: #e2543a;
+  border: 0.2cqw solid #fff;
+}
+.album-corpo {
+  width: 100%;
+  min-height: 0;
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: 1cqw;
+}
+.album-anterior,
+.album-proxima {
+  font-size: max(2.6cqw, 18px);
+  line-height: 1;
+  padding: 0.6cqw 1.2cqw;
+}
+.album-anterior:disabled,
+.album-proxima:disabled {
+  opacity: 0.3;
+  cursor: default;
+}
+/* a página: papel creme com a cor do chamado na borda */
+.album-pagina {
+  min-height: 0;
+  padding: 1.4cqw 1.6cqw 1.8cqw;
+  border: 0.35cqw solid var(--c, var(--brown));
+  border-radius: 1.6cqw;
+  background:
+    radial-gradient(circle at 1px 1px, rgba(140, 109, 74, 0.13) 1px, transparent 0) 0 0 / 1.4cqw 1.4cqw,
+    #fffaf0;
+  box-shadow: inset 0 0 0 0.5cqw #fff;
+  touch-action: pan-y;
+}
+.album-cabeca {
+  display: flex;
+  align-items: baseline;
+  justify-content: center;
+  gap: 1cqw;
+  margin-bottom: 1.2cqw;
+}
+.album-titulo {
+  font-family: Fredoka;
+  font-size: max(2cqw, 15px);
+  color: var(--c, var(--ink));
+}
+.album-local {
+  font-weight: 800;
+  font-size: max(1.1cqw, 10px);
+  color: #6a5238;
+}
+.album-espacos {
+  --colunas: 5;
+  display: grid;
+  grid-template-columns: repeat(var(--colunas), minmax(0, 15cqw));
+  justify-content: center;
+  gap: 1.4cqw;
+}
+.album-espacos[data-total="3"] { --colunas: 3; }
+.album-espacos[data-total="4"] { --colunas: 4; }
+.figurinha,
+.figurinha-vazia {
+  display: grid;
+  grid-template-rows: auto auto 1fr;
+  justify-items: center;
+  align-content: start;
+  gap: 0.3cqw;
+  padding: 0.6cqw 0.6cqw 0.8cqw;
+  border-radius: 1cqw;
+  text-align: center;
+}
+.figurinha {
+  font: inherit;
+  color: var(--ink);
+  border: 0;
+  background: #fff;
+  box-shadow: 0 0.3cqw 0.8cqw rgba(60, 40, 20, 0.25);
+  transform: rotate(var(--giro, 0deg));
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+.figurinha:hover,
+.figurinha:focus-visible {
+  transform: rotate(0deg) scale(1.04);
+}
+.figurinha-imagem {
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  border-radius: 0.6cqw;
+  background: #f3e6cf center / cover no-repeat;
+}
+.figurinha small,
+.figurinha-vazia small {
+  font-weight: 800;
+  font-size: max(0.95cqw, 9px);
+  color: #8a7258;
+}
+.figurinha b {
+  font-family: Fredoka;
+  font-weight: 600;
+  font-size: max(1.05cqw, 10px);
+  line-height: 1.2;
+}
+/* espaço ainda vazio: o contorno da figurinha que vai chegar */
+.figurinha-vazia {
+  border: 0.25cqw dashed #c9ad86;
+  background: rgba(233, 201, 160, 0.18);
+}
+.figurinha-vazia b {
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  display: grid;
+  place-items: center;
+  font-family: Fredoka;
+  font-size: max(4cqw, 26px);
+  color: #d8c3a3;
+}
+/* figurinha nova: cola com um tapinha na primeira vez */
+.figurinha.nova {
+  animation: colar 0.7s cubic-bezier(0.2, 1.4, 0.4, 1) both;
+}
+.figurinha.nova:nth-child(2) { animation-delay: 0.12s; }
+.figurinha.nova:nth-child(3) { animation-delay: 0.24s; }
+.figurinha.nova:nth-child(4) { animation-delay: 0.36s; }
+.figurinha.nova:nth-child(5) { animation-delay: 0.48s; }
+@keyframes colar {
+  from {
+    opacity: 0;
+    transform: translateY(-3cqw) rotate(-12deg) scale(1.35);
+  }
+  to {
+    opacity: 1;
+    transform: rotate(var(--giro, 0deg));
+  }
+}
+/* a figurinha grande, por cima da página */
+.album-zoom {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  background: rgba(20, 15, 30, 0.55);
+  border-radius: inherit;
+  cursor: pointer;
+  z-index: 2;
+}
+.album-zoom[hidden] {
+  display: none;
+}
+.album-zoom-cartao {
+  width: min(56cqw, 90%);
+  display: grid;
+  justify-items: center;
+  gap: 0.6cqw;
+  padding: 1.2cqw 1.2cqw 1.4cqw;
+  background: #fff;
+  border-radius: 1.4cqw;
+  box-shadow: 0 0.6cqw 2cqw rgba(0, 0, 0, 0.3);
+  text-align: center;
+}
+.album-zoom-imagem {
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  max-height: 62cqh;
+  border-radius: 1cqw;
+  background: #f3e6cf center / contain no-repeat;
+}
+.album-zoom-nivel {
+  font-weight: 800;
+  font-size: max(1.1cqw, 11px);
+  color: #8a7258;
+}
+.album-zoom-texto {
+  font-family: Fredoka;
+  font-size: max(1.8cqw, 15px);
+}
+.album-zoom-dica {
+  font-weight: 700;
+  font-size: max(0.95cqw, 10px);
+  color: #8a7258;
+}
+/* o prêmio na tela da lição */
+.premio-figurinha svg {
+  height: 3cqw;
+  fill: #fff6d8;
+  stroke: var(--ink);
+  stroke-width: 1.8;
+  stroke-linejoin: round;
+  transform: rotate(-8deg);
+}
+@media (prefers-reduced-motion: reduce) {
+  .figurinha.nova {
+    animation: none;
+  }
+}
+
+/* celular em pé: duas figurinhas por linha, a página rola */
+@media (max-aspect-ratio: 4/5) {
+  #stage .modal .album-painel {
+    width: 94cqw;
+    max-height: 94cqh;
+    padding: 3.4cqw 3cqw;
+    gap: 2.4cqw;
+  }
+  #stage .album-topo {
+    flex-direction: column;
+    gap: 1.6cqw;
+  }
+  #stage .album-progresso {
+    width: 70cqw;
+    text-align: center;
+  }
+  #stage .album-contador {
+    font-size: max(3.4cqw, 12px);
+  }
+  #stage .album-barra {
+    height: 3cqw;
+    margin-top: 1cqw;
+  }
+  #stage .album-abas {
+    flex-wrap: nowrap;
+    gap: 0.6cqw;
+  }
+  #stage .album-aba {
+    padding: 0.6cqw;
+    border-width: 0.5cqw;
+    border-radius: 2.4cqw;
+  }
+  #stage .album-aba img {
+    width: 8cqw;
+    height: 8cqw;
+    border-width: 0.5cqw;
+  }
+  #stage .album-aba small {
+    font-size: max(2.6cqw, 10px);
+  }
+  #stage .album-aba-nova {
+    width: 2.6cqw;
+    height: 2.6cqw;
+  }
+  #stage .album-corpo {
+    grid-template-columns: 1fr;
+  }
+  #stage .album-corpo .chip.album-anterior,
+  #stage .album-corpo .chip.album-proxima {
+    display: none;
+  }
+  #stage .album-pagina {
+    max-height: 58cqh;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    padding: 3cqw 3cqw 4cqw;
+    border-width: 0.7cqw;
+    border-radius: 3cqw;
+    background-size: 3cqw 3cqw, auto;
+  }
+  #stage .album-cabeca {
+    flex-direction: column;
+    align-items: center;
+    gap: 0.6cqw;
+    margin-bottom: 3cqw;
+  }
+  #stage .album-titulo {
+    font-size: max(5cqw, 17px);
+  }
+  #stage .album-local {
+    font-size: max(3cqw, 11px);
+  }
+  #stage .album-espacos {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 3.4cqw;
+  }
+  #stage .figurinha,
+  #stage .figurinha-vazia {
+    padding: 1.4cqw 1.4cqw 2cqw;
+    border-radius: 2.4cqw;
+    gap: 0.8cqw;
+  }
+  #stage .figurinha-vazia {
+    border-width: 0.6cqw;
+  }
+  #stage .figurinha small,
+  #stage .figurinha-vazia small {
+    font-size: max(2.8cqw, 10px);
+  }
+  #stage .figurinha b {
+    font-size: max(3.2cqw, 12px);
+  }
+  #stage .album-zoom-cartao {
+    width: 88cqw;
+    padding: 3cqw;
+    gap: 1.6cqw;
+    border-radius: 3cqw;
+  }
+  #stage .album-zoom-texto {
+    font-size: max(4.6cqw, 16px);
+  }
+  #stage .album-zoom-nivel,
+  #stage .album-zoom-dica {
+    font-size: max(3cqw, 11px);
+  }
+  #stage .premio-figurinha svg {
+    height: 8cqw;
+  }
+}
+
+/* celular deitado: pouca altura, página rola */
+@media (min-aspect-ratio: 4/5) and (max-height: 500px) {
+  #stage .modal .album-painel {
+    width: min(90cqw, 96%);
+    padding: 1.2cqw 2cqw;
+    gap: 0.8cqw;
+  }
+  #stage .album-aba img {
+    width: 4cqw;
+    height: 4cqw;
+  }
+  #stage .album-pagina {
+    max-height: 48cqh;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    padding: 1cqw 1.4cqw 1.4cqw;
+  }
+  #stage .album-cabeca {
+    margin-bottom: 0.8cqw;
+  }
+  #stage .album-espacos {
+    grid-template-columns: repeat(var(--colunas), minmax(0, 13cqw));
   }
 }

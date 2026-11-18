@@ -116,7 +116,7 @@
   $('#bReiniciar').onclick = () => $('#reiniciar').classList.add('on');
   $('#bReiniciarNao').onclick = () => $('#reiniciar').classList.remove('on');
   $('#bReiniciarSim').onclick = () => {
-    ['algoritimando-progresso', 'algoritimando-perfil', 'algoritimando-montagem', CHAVE_SEGREDO].forEach(k => {
+    ['algoritimando-progresso', 'algoritimando-perfil', 'algoritimando-montagem', 'algoritimando-album', CHAVE_SEGREDO].forEach(k => {
       try { localStorage.removeItem(k); } catch { /* sem memória: nada a apagar */ }
     });
     location.reload();
@@ -672,6 +672,7 @@
     $('#ideias').classList.add('on');
   }
   $('#bIdeias').onclick = abrirIdeias;
+  $('#bAlbum').onclick = () => Album.abrir();
   $('#bIdeiasFechar').onclick = () => $('#ideias').classList.remove('on');
 
   /* ---------------- promoção e final ---------------- */
@@ -760,6 +761,7 @@
 
   function recomecar() {
     SITUACOES.forEach(s => Progresso.apagar(s.id));
+    Album.esquecer();
     Perfil.recomecar();
     esquecerSegredo();
     central(`Novos chamados chegando! Boa sorte, ${P.nome}!`);

@@ -45,6 +45,7 @@
   const arte           = raiz.querySelector('.licao-arte');
   const premioEstrelas = raiz.querySelector('.premio-estrelas');
   const premioDicas    = raiz.querySelector('.premio-dicas');
+  const premioFigurinha = raiz.querySelector('.premio-figurinha');
   const caixaSelo      = raiz.querySelector('.licao-selo');
 
   // para o evento de continuar
@@ -126,6 +127,8 @@
     premioDicas.textContent = `+${premio.dicas} ${premio.dicas === 1 ? 'dica' : 'dicas'}`;
     // nível rejogado não dá dica: o prêmio some em vez de dizer "+0"
     premioDicas.parentElement.hidden = !premio.dicas;
+    // a figurinha do álbum: só na primeira vez (ver jogo.js)
+    premioFigurinha.hidden = !premio.figurinha;
     const ultima = indiceFase + 1 >= situacao.fases.length;
     botaoTexto.textContent = ultima ? 'Voltar à central' : 'Próximo nível';
 

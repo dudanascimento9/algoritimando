@@ -219,7 +219,9 @@
     if (ultima && !chave.startsWith('prof:')) Perfil.dados.concluidos[situacao.id] = true;
     Perfil.gravar();
 
-    const premio = { estrelas: ganhas, dicas: dicasGanhas };
+    // figurinha nova no álbum: só os chamados do jogo, na primeira vez
+    const figurinha = primeiraVez && typeof SITUACOES !== 'undefined' && SITUACOES.some(s => s.id === chave);
+    const premio = { estrelas: ganhas, dicas: dicasGanhas, figurinha };
     document.querySelectorAll('#licao .gStars').forEach(e => { e.textContent = contadorNum.textContent; });
     rosto.src = ROSTO.dica;
     // a espera deixa a criança ver a última carta assentar; o som de
