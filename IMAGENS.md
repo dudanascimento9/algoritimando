@@ -115,6 +115,8 @@ A numeração segue a ordem em que a carta aparece pela primeira vez no chamado.
 
 As 18 dos quatro primeiros chamados estão prontas, em `img/licoes/` como WebP (1200 × 896). **Faltam 10:** as dos três chamados novos, listadas no fim desta seção.
 
+**Revisão do professor (nov/2026):** 10 lições mostravam "errado x certo" e saíram do jogo: `sanduiche-1`, `robo-3`, `mochila-1`, `mochila-3`, `abelhas-1`, `abelhas-3`, `maos-1`, `maos-2`, `maos-4` e `rua-1`. Os arquivos estão em `img/licoes/comparativas/`. Os prompts novos estão em `PROMPTS-REVISAO.md`. Enquanto a imagem nova não chega, a tela abre direto no texto da lição.
+
 Na tela de "Parabéns! Você completou o nível!", a criança vê só a pergunta e esta imagem. O texto da lição fica atrás do botão "Ler a lição", para o professor conduzir a conversa. Enquanto a imagem não existe, aparece o quadro "ilustração da lição".
 
 Os prompts prontos para gerar cada uma estão em [PROMPTS-LICOES.md](PROMPTS-LICOES.md).
