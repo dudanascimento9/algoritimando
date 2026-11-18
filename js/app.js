@@ -175,8 +175,14 @@
 
   let qi = 0;
   let revendo = false;   // abertura vista de novo pelo menu
+  /* os quadros passam sozinhos, devagar: o tempo cresce com o
+     tamanho da legenda. O último espera o botão. */
+  let relogio = null;
+  const tempoDe = texto => Math.max(7000, texto.length * 95);
+  function pararRelogio() { clearTimeout(relogio); relogio = null; }
   function quadro(i) {
     qi = i;
+    pararRelogio();
     // a arte aparece inteira; o fundo desfocado (a mesma imagem)
     // preenche a sobra, seja qual for o formato da tela
     // ?v= faz o navegador buscar a imagem nova quando ela muda
@@ -185,8 +191,13 @@
     $('#dots').innerHTML = ABERTURA.map((_, k) => `<i class="${k === i ? 'on' : ''}"></i>`).join('');
     const ultimo = i === ABERTURA.length - 1;
     $('#bNext').textContent = ultimo ? (revendo ? 'Voltar ao menu' : 'Começar!') : 'Avançar ›';
+    if (!ultimo) {
+      relogio = setTimeout(() => {
+        if ($('#story').classList.contains('on') && qi === i) quadro(i + 1);
+      }, tempoDe(ABERTURA[i]));
+    }
   }
-  const fimDaHistoria = () => (revendo ? irParaMenu() : irParaCracha());
+  const fimDaHistoria = () => { pararRelogio(); return revendo ? irParaMenu() : irParaCracha(); };
   $('#bNext').onclick = () => (qi < ABERTURA.length - 1 ? quadro(qi + 1) : fimDaHistoria());
   $('#bSkip').onclick = fimDaHistoria;
 
@@ -636,6 +647,46 @@
         : `Chamado "${s.titulo}" concluído! Escolha o próximo.`);
     }
   });
+
+  /* atalho de desenvolvimento no mapa */
+  (function () {
+    const ZONAS = [
+      { x0: 6, x1: 12, y0: 31, y1: 45 },
+      { x0: 3, x1: 12, y0: 63, y1: 82 },
+    ];
+    const N = 15;
+    let etapa = 0, conta = 0, ultimo = 0;
+    const zerar = () => { etapa = 0; conta = 0; };
+    $('#mapa').addEventListener('click', ev => {
+      if (emProgresso || ev.target.closest('.lugar')) { zerar(); return; }
+      const miolo = $('#mapa .mapa-miolo');
+      if (!miolo) return;
+      const r = miolo.getBoundingClientRect();
+      const x = ((ev.clientX - r.left) / r.width) * 100;
+      const y = ((ev.clientY - r.top) / r.height) * 100;
+      const agora = Date.now();
+      if (agora - ultimo > 2500) zerar();
+      ultimo = agora;
+      const z = ZONAS[etapa];
+      if (!(x >= z.x0 && x <= z.x1 && y >= z.y0 && y <= z.y1)) {
+        // um toque fora: recomeça (ou já conta como o primeiro da árvore)
+        const a = ZONAS[0];
+        zerar();
+        if (x >= a.x0 && x <= a.x1 && y >= a.y0 && y <= a.y1) conta = 1;
+        return;
+      }
+      conta += 1;
+      if (conta < N) return;
+      if (etapa === 0) { etapa = 1; conta = 0; return; }
+      zerar();
+      SITUACOES.forEach(s => {
+        Progresso.gravar(s.id, { fase: s.fases.length, niveis: s.fases.map(() => 3) });
+        P.concluidos[s.id] = true;
+      });
+      Perfil.gravar();
+      seguir('Todos os chamados concluídos! Você pode jogar qualquer um de novo.');
+    });
+  })();
 
   /* ---------------- minhas ideias (os selos) ----------------
      Cada selo com a frase da ideia, uma carta do próprio chamado como
