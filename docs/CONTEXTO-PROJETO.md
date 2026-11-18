@@ -23,6 +23,7 @@ Cole este arquivo no começo de uma sessão nova, ou peça para a sessão ler `d
 6. Há **um formato só** de dados para os chamados do jogo e os do professor (`.json`).
 7. **Tudo responsivo** (PC e celular) em toda entrega.
 8. **Sem emojis** no jogo. Textos em português.
+9. **O Robô-guia guia, não é ensinado.** Ele foi feito para ajudar a criança; quem é ajudado são os moradores. Nunca escrever "ensine o robô" ou "ensinando o Robô-guia". A exceção é o nível 4 do sanduíche, em que um *computador* (outro personagem) precisa de instruções claras.
 
 ## Arquivos principais
 
