@@ -8,8 +8,8 @@
     />
     <title>Algoritimando</title>
     <!-- fontes guardadas no projeto: o jogo funciona sem internet -->
-    <link rel="stylesheet" href="fontes/fontes.css?v=202611181400" />
-    <link rel="stylesheet" href="style.css?v=202611181400" />
+    <link rel="stylesheet" href="fontes/fontes.css?v=202611181500" />
+    <link rel="stylesheet" href="style.css?v=202611181500" />
   </head>
   <body>
     <div id="stage">
@@ -47,6 +47,18 @@
         <p class="caption" id="sceneText"></p>
         <div class="dots" id="dots"></div>
         <button class="btn next" id="bNext">Avançar ›</button>
+      </section>
+
+      <!-- animação final: quadros como os da abertura, com zoom lento,
+           confete e o álbum completo (final.js) -->
+      <section class="screen" id="fim">
+        <div class="scene" id="fimArte"></div>
+        <div class="fim-album" id="fimAlbum" hidden></div>
+        <div class="confete" id="fimConfete" aria-hidden="true"></div>
+        <button class="btn small skip" id="bFimPular">Pular ›</button>
+        <p class="caption" id="fimTexto"></p>
+        <div class="dots" id="fimDots"></div>
+        <button class="btn next" id="bFimNext">Avançar ›</button>
       </section>
 
       <section class="screen bg-sand" id="char">
@@ -446,6 +458,11 @@
             <img src="img/ui/estrela.webp" alt="" />
             <b id="finStarsN">0</b> estrelas
           </p>
+          <div class="row final-extras">
+            <button class="btn ghost small" id="bFimAlbum" type="button">Ver meu álbum</button
+            ><button class="btn ghost small" id="bFimCertificado" type="button">Meu certificado</button
+            ><button class="btn ghost small" id="bFimRever" type="button">Rever a animação</button>
+          </div>
           <div class="row">
             <button class="btn" id="bAgain">Jogar de novo</button
             ><button class="btn brown" id="bToHub">Voltar à central</button>
@@ -461,6 +478,39 @@
           <button class="btn ghost" id="bIdeiasFechar" type="button">
             Voltar ao mapa
           </button>
+        </div>
+      </div>
+
+      <!-- Certificado para imprimir (final.js). Na impressão, só ele aparece. -->
+      <div class="modal" id="certificado" role="dialog" aria-modal="true" aria-label="Certificado">
+        <div class="certificado-caixa">
+          <article class="certificado-folha">
+            <div class="certificado-moldura">
+              <p class="certificado-jogo">Algoritimando</p>
+              <h2 class="certificado-titulo">Certificado de Agente Sênior</h2>
+              <p class="certificado-frase">Certificamos que</p>
+              <p class="certificado-nome" id="certNome"></p>
+              <p class="certificado-texto" id="certTexto"></p>
+              <ul class="certificado-ideias" id="certIdeias"></ul>
+              <div class="certificado-rodape">
+                <img class="certificado-rosto" id="certRosto" alt="" />
+                <div class="certificado-dados">
+                  <span><b id="certEstrelas">0</b> estrelas</span>
+                  <span>Código <b id="certCodigo"></b></span>
+                  <span id="certData"></span>
+                </div>
+                <img class="certificado-guia" src="img/robo-feliz.webp" alt="" />
+              </div>
+              <div class="certificado-assinaturas">
+                <span>Professor(a)</span>
+                <span>Escola</span>
+              </div>
+            </div>
+          </article>
+          <div class="row certificado-botoes">
+            <button class="btn" id="bCertImprimir" type="button">Imprimir</button
+            ><button class="btn ghost" id="bCertFechar" type="button">Fechar</button>
+          </div>
         </div>
       </div>
 
@@ -486,7 +536,7 @@
             </section>
             <button class="chip album-proxima" type="button" aria-label="Próxima página">›</button>
           </div>
-          <button class="btn ghost album-fechar" type="button">Voltar ao mapa</button>
+          <button class="btn ghost album-fechar" type="button">Fechar o álbum</button>
           <div class="album-zoom" hidden>
             <div class="album-zoom-cartao">
               <span class="album-zoom-imagem" role="img" aria-label="Figurinha"></span>
@@ -711,18 +761,19 @@
          das cartas numa região, explicações de erro em outra -->
     <div class="sr leitor-avisos" aria-live="polite"></div>
     <div class="sr leitor-explicacao" aria-live="polite"></div>
-    <script src="js/motor.js?v=202611181400"></script>
-    <script src="js/comum.js?v=202611181400"></script>
-    <script src="js/situacoes.js?v=202611181400"></script>
-    <script src="js/em-progresso.js?v=202611181400"></script>
-    <script src="js/som.js?v=202611181400"></script>
-    <script src="js/progresso.js?v=202611181400"></script>
-    <script src="js/perfil.js?v=202611181400"></script>
-    <script src="js/arrasto.js?v=202611181400"></script>
-    <script src="js/conclusao.js?v=202611181400"></script>
-    <script src="js/montagem.js?v=202611181400"></script>
-    <script src="js/jogo.js?v=202611181400"></script>
-    <script src="js/album.js?v=202611181400"></script>
-    <script src="js/app.js?v=202611181400"></script>
+    <script src="js/motor.js?v=202611181500"></script>
+    <script src="js/comum.js?v=202611181500"></script>
+    <script src="js/situacoes.js?v=202611181500"></script>
+    <script src="js/em-progresso.js?v=202611181500"></script>
+    <script src="js/som.js?v=202611181500"></script>
+    <script src="js/progresso.js?v=202611181500"></script>
+    <script src="js/perfil.js?v=202611181500"></script>
+    <script src="js/arrasto.js?v=202611181500"></script>
+    <script src="js/conclusao.js?v=202611181500"></script>
+    <script src="js/montagem.js?v=202611181500"></script>
+    <script src="js/jogo.js?v=202611181500"></script>
+    <script src="js/album.js?v=202611181500"></script>
+    <script src="js/final.js?v=202611181500"></script>
+    <script src="js/app.js?v=202611181500"></script>
   </body>
 </html>

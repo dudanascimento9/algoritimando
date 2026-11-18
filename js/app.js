@@ -710,7 +710,7 @@
   $('#bPromoNext').onclick = () => {
     const pendente = promocaoPendente();
     if (pendente) { promocao(pendente); return; }
-    if (ultimaPromocao === 'senior') { telaFinal(); return; }
+    if (ultimaPromocao === 'senior') { Final.tocar(P, telaFinal); return; }
     const faltam = faltamDe(SITUACOES);
     central(`Você agora é Agente! ${plural(faltam, 'A cidade ainda tem 1 chamado', 'A cidade ainda tem # chamados')} para você virar Agente Sênior.`);
   };
@@ -758,6 +758,9 @@
     irPara('final');
   }
   $('#bToHub').onclick = () => central();
+  $('#bFimAlbum').onclick = () => Album.abrir();
+  $('#bFimCertificado').onclick = () => Final.certificado(P);
+  $('#bFimRever').onclick = () => Final.tocar(P, telaFinal);
 
   function recomecar() {
     SITUACOES.forEach(s => Progresso.apagar(s.id));
