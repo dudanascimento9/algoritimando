@@ -73,7 +73,7 @@ Todos têm **todas as imagens**: cartas, lições, ilustração do cartão (`pic
   - as lições não mostram mais "errado x certo", só cenas positivas; as antigas estão em `img/licoes/comparativas/`, guardadas para uso futuro;
   - na rua, a criança olha a **cor da luz** de um semáforo de pedestre com **duas luzes** (sem bonequinho);
   - o quadro lateral de montagem só existe em Sanduíche (`pilha`) e Mochila (`cena`); nos outros 6 chamados ele saiu;
-  - **Meu álbum** na central: cada nível concluído cola a figurinha da lição; a tela da lição mostra "+1 figurinha" (chave `algoritimando-album`);
+  - **Meu álbum** na central: cada nível concluído cola a figurinha da lição; a tela da lição mostra "+1 figurinha" (chave `algoritimando-album`). A última página, **Figurinhas extras**, mostra as 10 lições antigas (`img/licoes/comparativas/`) e só abre depois da promoção a Agente (4 chamados);
   - **animação final** de 7 quadros antes da "Missão cumprida"; a tela final tem "Ver meu álbum", "Meu certificado" e "Rever a animação";
   - **certificado** em A4 deitado (botão Imprimir), com linhas em branco para Professor(a) e Escola.
 
