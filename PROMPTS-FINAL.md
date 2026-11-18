@@ -1,6 +1,8 @@
 # Prompts da animação final
 
-Uma sequência de **6 quadros** que passa antes da tela "Missão cumprida", do mesmo jeito que a abertura: imagem grande, legenda embaixo, botão "Avançar" e "Pular". No jogo, a ideia é dar a cada quadro um zoom lento, com confete e música, para parecer animado (ver as sugestões combinadas na conversa).
+Uma sequência de **6 quadros** que passa antes da tela "Missão cumprida", do mesmo jeito que a abertura: imagem grande, legenda embaixo, botão "Avançar" e "Pular". No jogo, cada quadro tem zoom lento; a festa e o crachá têm confete e música; entre o quadro 2 e o 3 entra o álbum completo, montado pelo jogo (`js/final.js`).
+
+**Prontos:** os 6 quadros já estão no jogo, em 2000 × 1116 (o mesmo tamanho do `story1`). Os prompts ficam como registro.
 
 **Arquivos:** `img/fim1.webp` a `img/fim6.webp`, formato 16:9 (1376 × 768), como os quadros da abertura (`story1` a `story4`).
 

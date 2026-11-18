@@ -96,7 +96,7 @@ A numeração segue a ordem em que a carta aparece pela primeira vez no chamado.
 | `rua-02.webp` | menino parado na calçada olhando para os lados | Olhe para os dois lados. | 1, 2, 3 |
 | `rua-03.webp` | menino andando no meio da faixa | Atravesse andando pela faixa. | 1, 2, 3 |
 | `rua-04.webp` | menino olhando para o semáforo de pedestres (sem cor acesa) | Olhe a cor da luz do semáforo. | 2, 3 |
-| `rua-05.webp` | menino parado ao lado do boneco vermelho aceso | Se estiver vermelho, espere o verde. | 2, 3 |
+| `rua-05.webp` | menino parado ao lado do semáforo de duas luzes, com a vermelha acesa | Se estiver vermelho, espere o verde. | 2, 3 |
 | `rua-06.webp` | mão de criança segurando a mão de um adulto | Dê a mão para um adulto. | 3 |
 
 ### Fazer uma limonada (Cozinha)
@@ -115,7 +115,7 @@ A numeração segue a ordem em que a carta aparece pela primeira vez no chamado.
 
 As 18 dos quatro primeiros chamados estão prontas, em `img/licoes/` como WebP (1200 × 896). **Faltam 10:** as dos três chamados novos, listadas no fim desta seção.
 
-**Revisão do professor (nov/2026):** 10 lições mostravam "errado x certo" e saíram do jogo: `sanduiche-1`, `robo-3`, `mochila-1`, `mochila-3`, `abelhas-1`, `abelhas-3`, `maos-1`, `maos-2`, `maos-4` e `rua-1`. Os arquivos estão em `img/licoes/comparativas/`. Os prompts novos estão em `PROMPTS-REVISAO.md`. Enquanto a imagem nova não chega, a tela abre direto no texto da lição.
+**Revisão do professor (nov/2026):** 10 lições mostravam "errado x certo" e saíram do jogo: `sanduiche-1`, `robo-3`, `mochila-1`, `mochila-3`, `abelhas-1`, `abelhas-3`, `maos-1`, `maos-2`, `maos-4` e `rua-1`. Os arquivos estão em `img/licoes/comparativas/`. As 10 novas, só com cenas positivas, já estão no jogo (prompts em `PROMPTS-REVISAO.md`). O semáforo virou de pedestre com duas luzes, sem bonequinho, em `rua-04`, `rua-05`, `level6`, `win6`, `pic6`, `rua-2` e `rua-3`.
 
 Na tela de "Parabéns! Você completou o nível!", a criança vê só a pergunta e esta imagem. O texto da lição fica atrás do botão "Ler a lição", para o professor conduzir a conversa. Enquanto a imagem não existe, aparece o quadro "ilustração da lição".
 

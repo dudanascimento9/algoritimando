@@ -1,5 +1,7 @@
 # Prompts da revisão do professor (novembro de 2026)
 
+**Prontos:** as 17 imagens dos dois lotes já estão no jogo. Os prompts ficam como registro.
+
 Dois lotes para o Agent do Google Flow:
 
 1. **Lições sem comparação:** 10 imagens novas de lição. As antigas mostravam "errado x certo" (X vermelho e check verde, ou personagem triste e feliz) e foram tiradas do jogo. Os arquivos antigos estão guardados em `img/licoes/comparativas/`.
