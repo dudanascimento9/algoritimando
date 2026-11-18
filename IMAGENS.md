@@ -95,7 +95,7 @@ A numeração segue a ordem em que a carta aparece pela primeira vez no chamado.
 | `rua-01.webp` | menino de moletom amarelo na calçada indo até a faixa | Vá até a faixa de pedestres. | 1, 2, 3 |
 | `rua-02.webp` | menino parado na calçada olhando para os lados | Olhe para os dois lados. | 1, 2, 3 |
 | `rua-03.webp` | menino andando no meio da faixa | Atravesse andando pela faixa. | 1, 2, 3 |
-| `rua-04.webp` | menino olhando para o semáforo de pedestres (sem cor acesa) | Olhe a cor do boneco do semáforo. | 2, 3 |
+| `rua-04.webp` | menino olhando para o semáforo de pedestres (sem cor acesa) | Olhe a cor da luz do semáforo. | 2, 3 |
 | `rua-05.webp` | menino parado ao lado do boneco vermelho aceso | Se estiver vermelho, espere o verde. | 2, 3 |
 | `rua-06.webp` | mão de criança segurando a mão de um adulto | Dê a mão para um adulto. | 3 |
 
@@ -175,8 +175,8 @@ Formato sugerido: PNG ou JPG em 4:3 (por exemplo 1200 × 900), mesmo estilo das 
 | Arquivo | Pergunta na tela | Ideia que a imagem precisa mostrar |
 |---|---|---|
 | `rua-1.webp` (nível 1) | Por que olhar antes? | Na rua, a ordem dos passos não serve só para dar certo: ela protege você. Olhar depois de atravessar não adianta nada. E olhar cedo demais também não: a rua muda a cada instante. A hora de olhar é logo antes de atravessar. |
-| `rua-2.webp` (nível 2) | Um passo que faz uma pergunta? | "Se estiver vermelho, espere o verde" é um passo diferente: ele começa com SE. Antes de obedecer, você precisa de uma resposta: de que cor está o boneco? Vermelho, você espera. Verde, você segue. Isso se chama condição: o mesmo passo a passo faz coisas diferentes, dependendo do que encontra. |
-| `rua-3.webp` (nível 3) | Quantas coisas precisam ser verdade? | Para atravessar, três coisas precisam ser verdade ao mesmo tempo: a mão dada, o boneco verde e os dois lados olhados. Se faltar uma só, a resposta é "ainda não". É uma condição com E: isto E isto E isto. Um passo a passo completo e na ordem certa se chama algoritmo. Com condições, ele sabe até a hora de esperar. |
+| `rua-2.webp` (nível 2) | Um passo que faz uma pergunta? | "Se estiver vermelho, espere o verde" é um passo diferente: ele começa com SE. Antes de obedecer, você precisa de uma resposta: de que cor está a luz? Vermelho, você espera. Verde, você segue. Isso se chama condição: o mesmo passo a passo faz coisas diferentes, dependendo do que encontra. |
+| `rua-3.webp` (nível 3) | Quantas coisas precisam ser verdade? | Para atravessar, três coisas precisam ser verdade ao mesmo tempo: a mão dada, a luz verde e os dois lados olhados. Se faltar uma só, a resposta é "ainda não". É uma condição com E: isto E isto E isto. Um passo a passo completo e na ordem certa se chama algoritmo. Com condições, ele sabe até a hora de esperar. |
 
 ### Fazer uma limonada (Cozinha)
 
