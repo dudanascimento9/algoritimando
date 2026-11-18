@@ -245,7 +245,7 @@ Attached images: the town map (story1, for the town look) and the robot (guide).
 Style: cute flat cartoon illustration for a children's educational game (ages 8 to 10), matching the attached town map and character references exactly: thick, smooth dark brown outlines (#3B2A2A), soft warm pastel colors, simple flat shading with small white highlights, rounded friendly shapes, expressive faces. Composition: the whole image is shown; keep the robot, the faces, the badge and the pins well inside the frame, with a little margin from the edges. Never include: text, letters, numbers, speech bubbles with words, logos, watermarks, photorealism, 3D render. Aspect ratio 16:9, landscape, 1376x768 px.
 ```
 
-### `story4.webp` — Quadro 4 — "No mapa, cada alfinete com um rosto é um chamado. Ensine o robô, passo a passo."
+### `story4.webp` — Quadro 4 — "No mapa, cada alfinete com um rosto é um chamado. Ajude os moradores, passo a passo."
 
 **Anexe:** `docs/referencias/mapa-com-alfinetes.webp` (o mapa com os alfinetes, como aparece no jogo), `img/story1.webp` e `img/guide.webp`.
 

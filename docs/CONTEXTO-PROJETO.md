@@ -23,6 +23,7 @@ Cole este arquivo no começo de uma sessão nova, ou peça para a sessão ler `d
 6. Há **um formato só** de dados para os chamados do jogo e os do professor (`.json`).
 7. **Tudo responsivo** (PC e celular) em toda entrega.
 8. **Sem emojis** no jogo. Textos em português.
+9. **O Robô-guia guia, não é ensinado.** Ele foi feito para ajudar a criança; quem é ajudado são os moradores. Nunca escrever "ensine o robô" ou "ensinando o Robô-guia". A exceção é o nível 4 do sanduíche, em que um *computador* (outro personagem) precisa de instruções claras.
 
 ## Arquivos principais
 
@@ -35,12 +36,15 @@ Cole este arquivo no começo de uma sessão nova, ou peça para a sessão ler `d
 | `js/jogo.js` | a partida: tabuleiro, Verificar, dica, estrelas e a cena em tela cheia do nível |
 | `js/app.js` | menu, abertura, crachá, mapa (`LUGARES`), progresso e promoções, sanduíche obrigatório, agente secreto, tela cheia das configurações, tela final |
 | `js/montagem.js` | imagem que se monta ao lado do tabuleiro: `pilha`, `cena` ou `tirinha` |
-| `js/conclusao.js` | tela de lição |
+| `js/conclusao.js` | tela de lição (sem imagem, abre direto no texto) |
+| `js/album.js` | "Meu álbum": uma figurinha (a imagem da lição) por nível concluído |
+| `js/final.js` | animação final (`fim1` a `fim6` + álbum completo) e certificado para imprimir |
 | `js/som.js`, `audio/musica-tema.mp3` | música, efeitos sintetizados (`acerto`, `erro`, `vitoria`, `clique`, `segredo`) e painel de configurações |
 | `js/perfil.js`, `js/progresso.js` | perfil do agente e progresso por chamado (localStorage) |
 | `editor.html`, `js/editor.js` | Área do professor: **desativada**, com o botão escondido no menu (ver "Pendências") |
 | `fontes/` | Fredoka e Nunito em WOFF2, com as licenças OFL |
 | `IMAGENS.md` | o que existe de imagem e onde aparece |
+| `PROMPTS-REVISAO.md`, `PROMPTS-FINAL.md` | prompts da revisão do professor (lições sem comparação, semáforo de duas luzes) e da animação final; já gerados |
 | `PROMPTS-CARTAS.md`, `PROMPTS-LICOES.md`, `PROMPTS-CENAS.md`, `PROMPTS-PECAS.md`, `PROMPTS-FIM-DO-JOGO.md` | prompts das imagens; quase tudo já gerado, e eles ficam como registro |
 | `docs/revisao-chamados-novos.md` | revisão pedagógica dos chamados novos |
 | `docs/referencias/mapa-com-alfinetes.webp` | print do mapa, usado como referência para gerar imagens |
@@ -64,6 +68,14 @@ Todos têm **todas as imagens**: cartas, lições, ilustração do cartão (`pic
 - As ilustrações dos cartões (`pic1` a `pic8`) seguem o padrão de **mini-cena**: uma ilha de chão em três quartos, com o cliente e o Robô-guia.
 
 ## Como o jogo funciona hoje
+
+- **Revisão do professor (18/11/2026):**
+  - as lições não mostram mais "errado x certo", só cenas positivas; as antigas estão em `img/licoes/comparativas/`, guardadas para uso futuro;
+  - na rua, a criança olha a **cor da luz** de um semáforo de pedestre com **duas luzes** (sem bonequinho);
+  - o quadro lateral de montagem só existe em Sanduíche (`pilha`) e Mochila (`cena`); nos outros 6 chamados ele saiu;
+  - **Meu álbum** na central: cada nível concluído cola a figurinha da lição; a tela da lição mostra "+1 figurinha" (chave `algoritimando-album`);
+  - **animação final** de 7 quadros antes da "Missão cumprida"; a tela final tem "Ver meu álbum", "Meu certificado" e "Rever a animação";
+  - **certificado** em A4 deitado (botão Imprimir), com linhas em branco para Professor(a) e Escola.
 
 - **Começo obrigatório pelo sanduíche:** até ele ser concluído, o mapa fica na sombra, com um círculo de luz sobre a Casa, e só o sanduíche abre. Perfis antigos, que já tinham outro chamado concluído, não são trancados.
 - **Promoções:** Estagiário passa a **Agente** com 4 chamados quaisquer e a **Agente Sênior** com os 8. Não há separação entre originais e novos.
@@ -97,7 +109,7 @@ Todos têm **todas as imagens**: cartas, lições, ilustração do cartão (`pic
 - **Nomes:** `img/passos/<chamado>-NN.webp` e `img/licoes/<chamado>-N.webp`.
 - **Cache:** os `.js` e `.css` são carregados com `?v=AAAAMMDDHHMM`. **A cada mudança publicada, atualize esse número** no `index.html` e no `editor.html`. As imagens da abertura têm o próprio `?v=` em `js/app.js`, e o mapa tem o dele no `style.css`.
 - **localStorage:**
-  - `algoritimando-perfil`, `algoritimando-progresso`, `algoritimando-som`, `algoritimando-som-ajustes`, `algoritimando-montagem`, `algoritimando-segredo`;
+  - `algoritimando-perfil`, `algoritimando-progresso`, `algoritimando-som`, `algoritimando-som-ajustes`, `algoritimando-montagem`, `algoritimando-segredo`, `algoritimando-album`;
   - também existem `algoritimando-em-progresso` (protótipos), `algoritimando-editor-rascunho` e as chaves `algoritimando-previa*` (prévia do editor);
   - para limpar tudo, no console: `localStorage.clear(); location.reload();`.
 - **Seleção de texto e arrasto de imagens** estão desativados no jogo.
@@ -139,6 +151,8 @@ Todos têm **todas as imagens**: cartas, lições, ilustração do cartão (`pic
 - **Ainda possível:** texto para banner, roteiro de apresentação de 1 minuto, vídeo vertical para redes.
 
 ## Pendências
+
+0. **Certificado:** falta o dono decidir logo (UNEB, escola), nome da escola impresso ou em branco, textos e nomes das ideias.
 
 1. **Revisão de Escovar os dentes:** os 4 níveis e as lições foram escritos nesta fase do projeto e ainda não passaram por revisão pedagógica de professor.
 2. **Plantar uma semente:** protótipo reprovado na revisão, em `js/em-progresso.js`. Refazer como 9º chamado ou apagar. O que falta está em `docs/revisao-chamados-novos.md`.

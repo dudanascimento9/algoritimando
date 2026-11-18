@@ -24,7 +24,7 @@
     'Na cidade de Algoritimando, os chamados de ajuda não param de chegar.',
     'Este é o Robô-guia. Ele sabe onde cada pessoa precisa de ajuda.',
     'Você vai ser o novo estagiário. Aqui está o seu crachá!',
-    'No mapa, cada alfinete com um rosto é um chamado. Ensine o robô, passo a passo.',
+    'No mapa, cada alfinete com um rosto é um chamado. Ajude os moradores, passo a passo.',
   ];
 
   /* ---------------- navegação ---------------- */
