@@ -5067,13 +5067,13 @@ body.arrastando * {
     gap: 0.6cqw;
   }
   #stage .album-aba {
-    padding: 0.6cqw;
+    padding: 0.4cqw;
     border-width: 0.5cqw;
     border-radius: 2.4cqw;
   }
   #stage .album-aba img {
-    width: 8cqw;
-    height: 8cqw;
+    width: 7.4cqw;
+    height: 7.4cqw;
     border-width: 0.5cqw;
   }
   #stage .album-aba small {
@@ -5434,5 +5434,77 @@ body.arrastando * {
   }
   .certificado-botoes {
     display: none !important;
+  }
+}
+
+/* ===== álbum: a página das figurinhas extras ===== */
+.album-aba-icone {
+  width: 4.6cqw;
+  height: 4.6cqw;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  border: 0.25cqw solid #c9a24a;
+  background: #fff6d8;
+}
+.album-aba-icone img {
+  width: 70%;
+  height: 70%;
+  border: 0;
+  border-radius: 0;
+  background: none;
+  object-fit: contain;
+}
+.album-aba-icone svg,
+.figurinha-vazia.trancada b svg {
+  width: 55%;
+  height: 55%;
+  fill: none;
+  stroke: #a8885a;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+.album-aba-extras.trancada .album-aba-icone {
+  background: #efe4d2;
+  border-color: #c9ad86;
+}
+.album-espacos[data-total="extras"] {
+  --colunas: 5;
+  grid-template-columns: repeat(5, minmax(0, 12.5cqw));
+}
+.album-espacos[data-total="extras"] .figurinha small {
+  font-size: max(0.85cqw, 9px);
+}
+.figurinha-vazia.trancada b svg {
+  width: 40%;
+  height: 40%;
+}
+/* com 10 figurinhas, a página rola se faltar altura */
+.album-pagina {
+  max-height: 64cqh;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+}
+@media (max-aspect-ratio: 4/5) {
+  #stage .album-aba-icone {
+    width: 7.4cqw;
+    height: 7.4cqw;
+    border-width: 0.5cqw;
+  }
+  #stage .album-espacos[data-total="extras"] {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  #stage .album-espacos[data-total="extras"] .figurinha small {
+    font-size: max(2.6cqw, 9px);
+  }
+}
+@media (min-aspect-ratio: 4/5) and (max-height: 500px) {
+  #stage .album-aba-icone {
+    width: 4cqw;
+    height: 4cqw;
+  }
+  #stage .album-espacos[data-total="extras"] {
+    grid-template-columns: repeat(5, minmax(0, 11cqw));
   }
 }

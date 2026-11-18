@@ -36,7 +36,7 @@
   const proximo = $('#bFimNext');
 
   // ?v= faz o navegador buscar a imagem nova quando ela muda
-  const V = '?v=202611181700';
+  const V = '?v=202611190100';
 
   /* Os quadros. "reserva": imagem do jogo usada enquanto a do
      quadro não existe. "festa": confete e música de vitória. */
@@ -60,6 +60,10 @@
   let atual = 0;
   let nome = 'Agente';
   let aoTerminar = null;
+  // os quadros passam sozinhos, devagar; o último espera o botão
+  let relogio = null;
+  const tempoDe = (texto, q) => Math.max(q.album ? 9000 : 7500, texto.length * 95);
+  function pararRelogio() { clearTimeout(relogio); relogio = null; }
 
   /* ------------- as peças de cada quadro ------------- */
 
@@ -123,6 +127,7 @@
 
   function quadro(i) {
     atual = i;
+    pararRelogio();
     const q = QUADROS[i];
     album.hidden = !q.album;
     arte.hidden = !!q.album;
@@ -136,9 +141,15 @@
     }
     dots.innerHTML = QUADROS.map((_, k) => `<i class="${k === i ? 'on' : ''}"></i>`).join('');
     proximo.textContent = i === QUADROS.length - 1 ? 'Concluir' : 'Avançar ›';
+    if (i < QUADROS.length - 1) {
+      relogio = setTimeout(() => {
+        if (tela.classList.contains('on') && atual === i) quadro(i + 1);
+      }, tempoDe(texto.textContent, q));
+    }
   }
 
   function terminar() {
+    pararRelogio();
     confete.textContent = '';
     const fim = aoTerminar;
     aoTerminar = null;

@@ -115,7 +115,7 @@ A numeração segue a ordem em que a carta aparece pela primeira vez no chamado.
 
 As 18 dos quatro primeiros chamados estão prontas, em `img/licoes/` como WebP (1200 × 896). **Faltam 10:** as dos três chamados novos, listadas no fim desta seção.
 
-**Revisão do professor (nov/2026):** 10 lições mostravam "errado x certo" e saíram do jogo: `sanduiche-1`, `robo-3`, `mochila-1`, `mochila-3`, `abelhas-1`, `abelhas-3`, `maos-1`, `maos-2`, `maos-4` e `rua-1`. Os arquivos estão em `img/licoes/comparativas/`. As 10 novas, só com cenas positivas, já estão no jogo (prompts em `PROMPTS-REVISAO.md`). O semáforo virou de pedestre com duas luzes, sem bonequinho, em `rua-04`, `rua-05`, `level6`, `win6`, `pic6`, `rua-2` e `rua-3`.
+**Revisão do professor (nov/2026):** 10 lições mostravam "errado x certo" e saíram do jogo: `sanduiche-1`, `robo-3`, `mochila-1`, `mochila-3`, `abelhas-1`, `abelhas-3`, `maos-1`, `maos-2`, `maos-4` e `rua-1`. Os arquivos estão em `img/licoes/comparativas/` e aparecem no álbum, na página "Figurinhas extras", liberada quando a criança vira Agente. As 10 novas, só com cenas positivas, já estão no jogo (prompts em `PROMPTS-REVISAO.md`). O semáforo virou de pedestre com duas luzes, sem bonequinho, em `rua-04`, `rua-05`, `level6`, `win6`, `pic6`, `rua-2` e `rua-3`.
 
 Na tela de "Parabéns! Você completou o nível!", a criança vê só a pergunta e esta imagem. O texto da lição fica atrás do botão "Ler a lição", para o professor conduzir a conversa. Enquanto a imagem não existe, aparece o quadro "ilustração da lição".
 
