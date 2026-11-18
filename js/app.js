@@ -116,7 +116,7 @@
   $('#bReiniciar').onclick = () => $('#reiniciar').classList.add('on');
   $('#bReiniciarNao').onclick = () => $('#reiniciar').classList.remove('on');
   $('#bReiniciarSim').onclick = () => {
-    ['algoritimando-progresso', 'algoritimando-perfil', 'algoritimando-montagem', CHAVE_SEGREDO].forEach(k => {
+    ['algoritimando-progresso', 'algoritimando-perfil', 'algoritimando-montagem', 'algoritimando-album', CHAVE_SEGREDO].forEach(k => {
       try { localStorage.removeItem(k); } catch { /* sem memória: nada a apagar */ }
     });
     location.reload();
@@ -672,6 +672,7 @@
     $('#ideias').classList.add('on');
   }
   $('#bIdeias').onclick = abrirIdeias;
+  $('#bAlbum').onclick = () => Album.abrir();
   $('#bIdeiasFechar').onclick = () => $('#ideias').classList.remove('on');
 
   /* ---------------- promoção e final ---------------- */
@@ -709,7 +710,7 @@
   $('#bPromoNext').onclick = () => {
     const pendente = promocaoPendente();
     if (pendente) { promocao(pendente); return; }
-    if (ultimaPromocao === 'senior') { telaFinal(); return; }
+    if (ultimaPromocao === 'senior') { Final.tocar(P, telaFinal); return; }
     const faltam = faltamDe(SITUACOES);
     central(`Você agora é Agente! ${plural(faltam, 'A cidade ainda tem 1 chamado', 'A cidade ainda tem # chamados')} para você virar Agente Sênior.`);
   };
@@ -757,9 +758,13 @@
     irPara('final');
   }
   $('#bToHub').onclick = () => central();
+  $('#bFimAlbum').onclick = () => Album.abrir();
+  $('#bFimCertificado').onclick = () => Final.certificado(P);
+  $('#bFimRever').onclick = () => Final.tocar(P, telaFinal);
 
   function recomecar() {
     SITUACOES.forEach(s => Progresso.apagar(s.id));
+    Album.esquecer();
     Perfil.recomecar();
     esquecerSegredo();
     central(`Novos chamados chegando! Boa sorte, ${P.nome}!`);

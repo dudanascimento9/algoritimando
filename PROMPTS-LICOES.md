@@ -6,7 +6,7 @@
 
 - **Gere um chamado por vez, na mesma conversa**, anexando as referências indicadas em cada seção (estão no repositório).
 - **Formato 4:3 (paisagem)**, 1600 × 1200. A imagem aparece inteira, sem cortes, num quadro de fundo creme.
-- **Diferente das cartas:** aqui pode haver uma cena pequena, personagens e comparações. Muitas lições usam **dois quadros lado a lado**: à esquerda o jeito errado (X vermelho), à direita o certo (check verde).
+- **Diferente das cartas:** aqui pode haver uma cena pequena e personagens. **Desde a revisão do professor (nov/2026), nada de "errado x certo"**: só cenas positivas e explicativas. As 10 lições comparativas saíram do jogo (guardadas em `img/licoes/comparativas/`), e os prompts novos estão em `PROMPTS-REVISAO.md`. Os prompts antigos abaixo ficam como registro.
 - **Nada de texto** na imagem. Setas, linhas pontilhadas, X e check podem.
 - **Mesmos personagens e objetos do jogo:** o cliente do chamado, o Robô-guia e os objetos das cartas.
 - Ao salvar, use o nome indicado em cada bloco (ex.: `sanduiche-1.webp`). A imagem aparece sozinha no jogo, sem mexer no código; o recorte e o ajuste de tamanho são feitos como nas cartas.

@@ -2486,11 +2486,11 @@ body.arrastando * {
 }
 
 /* ===== abertura: a arte inteira, texto e botões numa faixa embaixo ===== */
-#story {
+:is(#story, #fim) {
   --faixa: 11.5cqw;
   background: #2b2233;
 }
-#story::before {
+:is(#story, #fim)::before {
   content: "";
   position: absolute;
   inset: 0 0 var(--faixa);
@@ -2498,48 +2498,48 @@ body.arrastando * {
   filter: blur(1.2cqw) brightness(0.75);
   transform: scale(1.08);
 }
-#story .scene {
+:is(#story, #fim) .scene {
   inset: 0 0 var(--faixa);
   background: var(--arte) center / contain no-repeat;
   transition: none;
 }
-#story .caption {
+:is(#story, #fim) .caption {
   top: auto;
   bottom: 3.4cqw;
   width: 58cqw;
   font-size: max(1.75cqw, 9px);
   padding: 0.9cqw 2cqw;
 }
-#story .dots {
+:is(#story, #fim) .dots {
   bottom: 1.1cqw;
 }
-#story .skip {
+:is(#story, #fim) .skip {
   top: auto;
   right: auto;
   left: 2cqw;
   bottom: 3.6cqw;
 }
-#story .next {
+:is(#story, #fim) .next {
   bottom: 3.2cqw;
 }
 @media (max-aspect-ratio: 4/5) {
-  #stage #story {
+  #stage :is(#story, #fim) {
     --faixa: 56cqw;
   }
-  #stage #story .caption {
+  #stage :is(#story, #fim) .caption {
     bottom: 26cqw;
     width: 88cqw;
     font-size: 4.3cqw;
     padding: 3cqw 4cqw;
   }
-  #stage #story .skip {
+  #stage :is(#story, #fim) .skip {
     left: 4cqw;
     bottom: 6cqw;
   }
-  #stage #story .next {
+  #stage :is(#story, #fim) .next {
     bottom: 6cqw;
   }
-  #stage #story .dots {
+  #stage :is(#story, #fim) .dots {
     left: 50%;
     transform: translateX(-50%);
     bottom: 18cqw;
@@ -3686,7 +3686,8 @@ body.arrastando * {
   margin-top: 0.6cqw;
   line-height: 1.25;
 }
-.prog #bIdeias {
+.prog #bIdeias,
+.prog #bAlbum {
   margin-top: 0.9cqw;
   font-size: max(1.2cqw, 9px);
   padding: 0.4cqw 1.4cqw;
@@ -3863,7 +3864,8 @@ body.arrastando * {
     font-size: max(3.3cqw, 12px);
     margin-top: 1.4cqw;
   }
-  #stage .prog #bIdeias {
+  #stage .prog #bIdeias,
+  #stage .prog #bAlbum {
     margin-top: 2cqw;
     font-size: max(3.6cqw, 13px);
     padding: 1cqw 3cqw;
@@ -4231,22 +4233,22 @@ body.arrastando * {
   }
 
   /* ---------- história ---------- */
-  #stage #story {
+  #stage :is(#story, #fim) {
     --faixa: 17cqw;
   }
-  #stage #story .caption {
+  #stage :is(#story, #fim) .caption {
     width: 58cqw;
     bottom: 5.6cqw;
     font-size: max(2.1cqw, 13px);
     padding: 1cqw 2cqw;
   }
-  #stage #story .skip {
+  #stage :is(#story, #fim) .skip {
     bottom: 5.4cqw;
   }
-  #stage #story .next {
+  #stage :is(#story, #fim) .next {
     bottom: 5.2cqw;
   }
-  #stage #story .dots {
+  #stage :is(#story, #fim) .dots {
     bottom: 1.4cqw;
   }
 
@@ -4767,5 +4769,670 @@ body.arrastando * {
       0 0 0 0.8cqw #ffe08a,
       0 0 0 1.6cqw #c98a12,
       0 0 5cqw 1.4cqw rgba(255, 196, 64, 0.65);
+  }
+}
+
+/* ===== Meu álbum: uma figurinha por nível concluído (album.js) ===== */
+.modal .album-painel {
+  position: relative;
+  width: min(86cqw, 96%);
+  max-height: 96cqh;
+  padding: 1.6cqw 2.4cqw;
+  gap: 1cqw;
+}
+.album-topo {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 2cqw;
+}
+.album-progresso {
+  width: 24cqw;
+  text-align: right;
+}
+.album-contador {
+  font-weight: 800;
+  font-size: max(1.3cqw, 11px);
+  color: #6a5238;
+}
+.album-barra {
+  margin-top: 0.4cqw;
+}
+.album-abas {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 0.8cqw;
+}
+.album-aba {
+  position: relative;
+  display: grid;
+  justify-items: center;
+  gap: 0.2cqw;
+  padding: 0.4cqw;
+  border: 0.25cqw solid transparent;
+  border-radius: 1.2cqw;
+  background: transparent;
+  cursor: pointer;
+  font: inherit;
+  color: var(--ink);
+}
+.album-aba img {
+  width: 4.6cqw;
+  height: 4.6cqw;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 0.25cqw solid var(--c, var(--brown));
+  background: #fff;
+}
+.album-aba small {
+  font-weight: 800;
+  font-size: max(1cqw, 10px);
+}
+.album-aba.ativa {
+  border-color: var(--c, var(--brown));
+  background: #fff;
+}
+.album-aba-nova {
+  position: absolute;
+  top: 0.2cqw;
+  right: 0.2cqw;
+  width: 1.2cqw;
+  height: 1.2cqw;
+  min-width: 9px;
+  min-height: 9px;
+  border-radius: 50%;
+  background: #e2543a;
+  border: 0.2cqw solid #fff;
+}
+.album-corpo {
+  width: 100%;
+  min-height: 0;
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: 1cqw;
+}
+.album-anterior,
+.album-proxima {
+  font-size: max(2.6cqw, 18px);
+  line-height: 1;
+  padding: 0.6cqw 1.2cqw;
+}
+.album-anterior:disabled,
+.album-proxima:disabled {
+  opacity: 0.3;
+  cursor: default;
+}
+/* a página: papel creme com a cor do chamado na borda */
+.album-pagina {
+  min-height: 0;
+  padding: 1.4cqw 1.6cqw 1.8cqw;
+  border: 0.35cqw solid var(--c, var(--brown));
+  border-radius: 1.6cqw;
+  background:
+    radial-gradient(circle at 1px 1px, rgba(140, 109, 74, 0.13) 1px, transparent 0) 0 0 / 1.4cqw 1.4cqw,
+    #fffaf0;
+  box-shadow: inset 0 0 0 0.5cqw #fff;
+  touch-action: pan-y;
+}
+.album-cabeca {
+  display: flex;
+  align-items: baseline;
+  justify-content: center;
+  gap: 1cqw;
+  margin-bottom: 1.2cqw;
+}
+.album-titulo {
+  font-family: Fredoka;
+  font-size: max(2cqw, 15px);
+  color: var(--c, var(--ink));
+}
+.album-local {
+  font-weight: 800;
+  font-size: max(1.1cqw, 10px);
+  color: #6a5238;
+}
+.album-espacos {
+  --colunas: 5;
+  display: grid;
+  grid-template-columns: repeat(var(--colunas), minmax(0, 15cqw));
+  justify-content: center;
+  gap: 1.4cqw;
+}
+.album-espacos[data-total="3"] { --colunas: 3; }
+.album-espacos[data-total="4"] { --colunas: 4; }
+.figurinha,
+.figurinha-vazia {
+  display: grid;
+  grid-template-rows: auto auto 1fr;
+  justify-items: center;
+  align-content: start;
+  gap: 0.3cqw;
+  padding: 0.6cqw 0.6cqw 0.8cqw;
+  border-radius: 1cqw;
+  text-align: center;
+}
+.figurinha {
+  font: inherit;
+  color: var(--ink);
+  border: 0;
+  background: #fff;
+  box-shadow: 0 0.3cqw 0.8cqw rgba(60, 40, 20, 0.25);
+  transform: rotate(var(--giro, 0deg));
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+.figurinha:hover,
+.figurinha:focus-visible {
+  transform: rotate(0deg) scale(1.04);
+}
+.figurinha-imagem {
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  border-radius: 0.6cqw;
+  background: #f3e6cf center / cover no-repeat;
+}
+.figurinha small,
+.figurinha-vazia small {
+  font-weight: 800;
+  font-size: max(0.95cqw, 9px);
+  color: #8a7258;
+}
+.figurinha b {
+  font-family: Fredoka;
+  font-weight: 600;
+  font-size: max(1.05cqw, 10px);
+  line-height: 1.2;
+}
+/* espaço ainda vazio: o contorno da figurinha que vai chegar */
+.figurinha-vazia {
+  border: 0.25cqw dashed #c9ad86;
+  background: rgba(233, 201, 160, 0.18);
+}
+.figurinha-vazia b {
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  display: grid;
+  place-items: center;
+  font-family: Fredoka;
+  font-size: max(4cqw, 26px);
+  color: #d8c3a3;
+}
+/* figurinha nova: cola com um tapinha na primeira vez */
+.figurinha.nova {
+  animation: colar 0.7s cubic-bezier(0.2, 1.4, 0.4, 1) both;
+}
+.figurinha.nova:nth-child(2) { animation-delay: 0.12s; }
+.figurinha.nova:nth-child(3) { animation-delay: 0.24s; }
+.figurinha.nova:nth-child(4) { animation-delay: 0.36s; }
+.figurinha.nova:nth-child(5) { animation-delay: 0.48s; }
+@keyframes colar {
+  from {
+    opacity: 0;
+    transform: translateY(-3cqw) rotate(-12deg) scale(1.35);
+  }
+  to {
+    opacity: 1;
+    transform: rotate(var(--giro, 0deg));
+  }
+}
+/* a figurinha grande, por cima da página */
+.album-zoom {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  background: rgba(20, 15, 30, 0.55);
+  border-radius: inherit;
+  cursor: pointer;
+  z-index: 2;
+}
+.album-zoom[hidden] {
+  display: none;
+}
+.album-zoom-cartao {
+  width: min(56cqw, 90%);
+  display: grid;
+  justify-items: center;
+  gap: 0.6cqw;
+  padding: 1.2cqw 1.2cqw 1.4cqw;
+  background: #fff;
+  border-radius: 1.4cqw;
+  box-shadow: 0 0.6cqw 2cqw rgba(0, 0, 0, 0.3);
+  text-align: center;
+}
+.album-zoom-imagem {
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  max-height: 62cqh;
+  border-radius: 1cqw;
+  background: #f3e6cf center / contain no-repeat;
+}
+.album-zoom-nivel {
+  font-weight: 800;
+  font-size: max(1.1cqw, 11px);
+  color: #8a7258;
+}
+.album-zoom-texto {
+  font-family: Fredoka;
+  font-size: max(1.8cqw, 15px);
+}
+.album-zoom-dica {
+  font-weight: 700;
+  font-size: max(0.95cqw, 10px);
+  color: #8a7258;
+}
+/* o prêmio na tela da lição */
+.premio-figurinha svg {
+  height: 3cqw;
+  fill: #fff6d8;
+  stroke: var(--ink);
+  stroke-width: 1.8;
+  stroke-linejoin: round;
+  transform: rotate(-8deg);
+}
+@media (prefers-reduced-motion: reduce) {
+  .figurinha.nova {
+    animation: none;
+  }
+}
+
+/* celular em pé: duas figurinhas por linha, a página rola */
+@media (max-aspect-ratio: 4/5) {
+  #stage .modal .album-painel {
+    width: 94cqw;
+    max-height: 94cqh;
+    padding: 3.4cqw 3cqw;
+    gap: 2.4cqw;
+  }
+  #stage .album-topo {
+    flex-direction: column;
+    gap: 1.6cqw;
+  }
+  #stage .album-progresso {
+    width: 70cqw;
+    text-align: center;
+  }
+  #stage .album-contador {
+    font-size: max(3.4cqw, 12px);
+  }
+  #stage .album-barra {
+    height: 3cqw;
+    margin-top: 1cqw;
+  }
+  #stage .album-abas {
+    flex-wrap: nowrap;
+    gap: 0.6cqw;
+  }
+  #stage .album-aba {
+    padding: 0.6cqw;
+    border-width: 0.5cqw;
+    border-radius: 2.4cqw;
+  }
+  #stage .album-aba img {
+    width: 8cqw;
+    height: 8cqw;
+    border-width: 0.5cqw;
+  }
+  #stage .album-aba small {
+    font-size: max(2.6cqw, 10px);
+  }
+  #stage .album-aba-nova {
+    width: 2.6cqw;
+    height: 2.6cqw;
+  }
+  #stage .album-corpo {
+    grid-template-columns: 1fr;
+  }
+  #stage .album-corpo .chip.album-anterior,
+  #stage .album-corpo .chip.album-proxima {
+    display: none;
+  }
+  #stage .album-pagina {
+    max-height: 58cqh;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    padding: 3cqw 3cqw 4cqw;
+    border-width: 0.7cqw;
+    border-radius: 3cqw;
+    background-size: 3cqw 3cqw, auto;
+  }
+  #stage .album-cabeca {
+    flex-direction: column;
+    align-items: center;
+    gap: 0.6cqw;
+    margin-bottom: 3cqw;
+  }
+  #stage .album-titulo {
+    font-size: max(5cqw, 17px);
+  }
+  #stage .album-local {
+    font-size: max(3cqw, 11px);
+  }
+  #stage .album-espacos {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 3.4cqw;
+  }
+  #stage .figurinha,
+  #stage .figurinha-vazia {
+    padding: 1.4cqw 1.4cqw 2cqw;
+    border-radius: 2.4cqw;
+    gap: 0.8cqw;
+  }
+  #stage .figurinha-vazia {
+    border-width: 0.6cqw;
+  }
+  #stage .figurinha small,
+  #stage .figurinha-vazia small {
+    font-size: max(2.8cqw, 10px);
+  }
+  #stage .figurinha b {
+    font-size: max(3.2cqw, 12px);
+  }
+  #stage .album-zoom-cartao {
+    width: 88cqw;
+    padding: 3cqw;
+    gap: 1.6cqw;
+    border-radius: 3cqw;
+  }
+  #stage .album-zoom-texto {
+    font-size: max(4.6cqw, 16px);
+  }
+  #stage .album-zoom-nivel,
+  #stage .album-zoom-dica {
+    font-size: max(3cqw, 11px);
+  }
+  #stage .premio-figurinha svg {
+    height: 8cqw;
+  }
+}
+
+/* celular deitado: pouca altura, página rola */
+@media (min-aspect-ratio: 4/5) and (max-height: 500px) {
+  #stage .modal .album-painel {
+    width: min(90cqw, 96%);
+    padding: 1.2cqw 2cqw;
+    gap: 0.8cqw;
+  }
+  #stage .album-aba img {
+    width: 4cqw;
+    height: 4cqw;
+  }
+  #stage .album-pagina {
+    max-height: 48cqh;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    padding: 1cqw 1.4cqw 1.4cqw;
+  }
+  #stage .album-cabeca {
+    margin-bottom: 0.8cqw;
+  }
+  #stage .album-espacos {
+    grid-template-columns: repeat(var(--colunas), minmax(0, 13cqw));
+  }
+}
+
+/* ===== animação final (final.js): zoom lento, álbum completo, confete ===== */
+#fim .scene[hidden],
+#fim .fim-album[hidden] {
+  display: none;
+}
+#fim .scene.zoom {
+  animation: fim-zoom 9s ease-out both;
+}
+@keyframes fim-zoom {
+  from { transform: scale(1); }
+  to { transform: scale(1.08); }
+}
+#fim .fim-album {
+  position: absolute;
+  inset: 3cqw 6cqw calc(var(--faixa) + 1cqw);
+  display: grid;
+  grid-template-columns: repeat(8, 1fr);
+  align-content: center;
+  gap: 1cqw;
+  background: #fffaf0;
+  border: 0.4cqw solid var(--brown);
+  border-radius: 1.6cqw;
+  padding: 1.6cqw;
+}
+.fim-figurinha {
+  aspect-ratio: 4 / 3;
+  border-radius: 0.5cqw;
+  border: 0.35cqw solid #fff;
+  outline: 0.2cqw solid var(--c, var(--brown));
+  background: #f3e6cf center / cover no-repeat;
+  box-shadow: 0 0.3cqw 0.6cqw rgba(60, 40, 20, 0.25);
+  animation: colar 0.6s cubic-bezier(0.2, 1.4, 0.4, 1) var(--atraso, 0s) both;
+}
+#fim .confete {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+#fim .confete i {
+  position: absolute;
+  top: -3cqw;
+  width: 1cqw;
+  height: 1.6cqw;
+  min-width: 6px;
+  min-height: 9px;
+  border-radius: 0.2cqw;
+  animation: confete-cai linear both;
+}
+@keyframes confete-cai {
+  to {
+    transform: translate(var(--lado, 0), 110cqh) rotate(var(--giro, 360deg));
+  }
+}
+/* tela final: os atalhos para o álbum, o certificado e a animação */
+.final-extras {
+  flex-wrap: wrap;
+  justify-content: center;
+}
+@media (prefers-reduced-motion: reduce) {
+  #fim .scene.zoom,
+  .fim-figurinha {
+    animation: none;
+  }
+  #fim .confete {
+    display: none;
+  }
+}
+@media (max-aspect-ratio: 4/5) {
+  #stage #fim .fim-album {
+    inset: 18cqw 4cqw calc(var(--faixa) + 4cqw);
+    grid-template-columns: repeat(4, 1fr);
+    gap: 2cqw;
+    padding: 3cqw;
+    border-width: 0.8cqw;
+    border-radius: 3cqw;
+  }
+  #stage #fim .confete i {
+    width: 2.4cqw;
+    height: 3.6cqw;
+  }
+}
+
+/* ===== certificado (final.js): folha A4 deitada ===== */
+.modal.on#certificado {
+  overflow-y: auto;
+  padding: 2cqh 0;
+}
+.certificado-caixa {
+  display: grid;
+  justify-items: center;
+  gap: 1.4cqw;
+  width: min(80cqw, 96%, 112cqh);
+}
+.certificado-folha {
+  width: 100%;
+  aspect-ratio: 297 / 210;
+  container-type: inline-size;
+  background: #fffaf0;
+  border-radius: 1cqw;
+  box-shadow: 0 1cqw 3cqw rgba(0, 0, 0, 0.35);
+  padding: 2.2%;
+}
+.certificado-moldura {
+  height: 100%;
+  border: 0.6cqi solid #c9a24a;
+  outline: 0.25cqi solid #c9a24a;
+  outline-offset: -1.4cqi;
+  border-radius: 1.2cqi;
+  padding: 3.4cqi 5cqi 3cqi;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  color: var(--ink);
+}
+#certificado .certificado-folha .certificado-jogo {
+  font-family: Fredoka;
+  font-weight: 600;
+  font-size: 2cqi;
+  letter-spacing: 0.3cqi;
+  text-transform: uppercase;
+  color: #8a6a2a;
+}
+.certificado-titulo {
+  font-family: Fredoka;
+  font-size: 4.6cqi;
+  margin: 0.4cqi 0 1.2cqi;
+  color: #6b4a18;
+}
+#certificado .certificado-folha .certificado-frase,
+#certificado .certificado-folha .certificado-texto {
+  font-weight: 700;
+  font-size: 1.8cqi;
+  line-height: 1.4;
+}
+#certificado .certificado-folha .certificado-nome {
+  font-family: Fredoka;
+  font-weight: 600;
+  font-size: 5cqi;
+  margin: 0.4cqi 0;
+  padding: 0 4cqi 0.4cqi;
+  border-bottom: 0.25cqi solid #c9a24a;
+  color: var(--p);
+}
+#certificado .certificado-folha .certificado-texto {
+  max-width: 70cqi;
+  margin-top: 0.8cqi;
+}
+.certificado-ideias {
+  list-style: none;
+  padding: 0;
+  margin: 1.4cqi 0 0;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0.9cqi 1.4cqi;
+  width: 100%;
+}
+.certificado-ideias li {
+  display: grid;
+  gap: 0.1cqi;
+  padding: 0.6cqi 0.8cqi;
+  border: 0.2cqi solid var(--c, var(--brown));
+  border-radius: 0.9cqi;
+  background: #fff;
+}
+.certificado-ideias b {
+  font-family: Fredoka;
+  font-weight: 600;
+  font-size: 1.6cqi;
+  color: var(--c, var(--ink));
+}
+.certificado-ideias small {
+  font-weight: 700;
+  font-size: 1.15cqi;
+  color: #6a5238;
+}
+.certificado-rodape {
+  margin-top: auto;
+  width: 100%;
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 2cqi;
+}
+.certificado-rosto,
+.certificado-guia {
+  height: 12cqi;
+  width: auto;
+  object-fit: contain;
+}
+.certificado-dados {
+  display: flex;
+  gap: 3cqi;
+  font-weight: 800;
+  font-size: 1.5cqi;
+  color: #6a5238;
+}
+.certificado-assinaturas {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  gap: 10cqi;
+  margin-top: 1.4cqi;
+}
+.certificado-assinaturas span {
+  width: 26cqi;
+  padding-top: 0.5cqi;
+  border-top: 0.2cqi solid var(--ink);
+  font-weight: 700;
+  font-size: 1.3cqi;
+}
+@media (max-aspect-ratio: 4/5) {
+  #stage .certificado-caixa {
+    width: 96cqw;
+    gap: 4cqw;
+  }
+}
+
+/* na impressão, só o certificado */
+@media print {
+  @page {
+    size: A4 landscape;
+    margin: 0;
+  }
+  html,
+  body {
+    background: #fff !important;
+    height: auto !important;
+    overflow: visible !important;
+  }
+  body * {
+    visibility: hidden;
+  }
+  #certificado,
+  #certificado * {
+    visibility: visible;
+  }
+  #certificado {
+    position: fixed !important;
+    inset: 0 !important;
+    display: block !important;
+    background: none !important;
+    padding: 0 !important;
+  }
+  .certificado-caixa {
+    width: 100% !important;
+  }
+  .certificado-folha {
+    width: 297mm;
+    height: 210mm;
+    aspect-ratio: auto;
+    border-radius: 0;
+    box-shadow: none;
+    padding: 6mm;
+    print-color-adjust: exact;
+    -webkit-print-color-adjust: exact;
+  }
+  .certificado-botoes {
+    display: none !important;
   }
 }
