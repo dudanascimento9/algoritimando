@@ -191,10 +191,14 @@
     $('#dots').innerHTML = ABERTURA.map((_, k) => `<i class="${k === i ? 'on' : ''}"></i>`).join('');
     const ultimo = i === ABERTURA.length - 1;
     $('#bNext').textContent = ultimo ? (revendo ? 'Voltar ao menu' : 'Começar!') : 'Avançar ›';
+    // o ponto do quadro atual vira uma barrinha que enche no tempo do quadro
+    $('#dots').classList.toggle('auto', !ultimo);
     if (!ultimo) {
+      const tempo = tempoDe(ABERTURA[i]);
+      $('#dots').style.setProperty('--tempo', tempo + 'ms');
       relogio = setTimeout(() => {
         if ($('#story').classList.contains('on') && qi === i) quadro(i + 1);
-      }, tempoDe(ABERTURA[i]));
+      }, tempo);
     }
   }
   const fimDaHistoria = () => { pararRelogio(); return revendo ? irParaMenu() : irParaCracha(); };

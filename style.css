@@ -5552,3 +5552,39 @@ body.arrastando * {
 @media (prefers-reduced-motion: reduce) {
   .grade-quadro.nova .g-robo { animation: none; }
 }
+
+/* abertura e animação final: o quadro atual mostra quanto falta para
+   passar sozinho (a barrinha enche no tempo do quadro; app.js e final.js) */
+:is(#story, #fim) .dots {
+  align-items: center;
+}
+:is(#story, #fim) .dots i.on {
+  width: 7cqw;
+  position: relative;
+  overflow: hidden;
+  background: #e6dcf4;
+}
+:is(#story, #fim) .dots i.on::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: var(--p);
+  transform-origin: left center;
+}
+:is(#story, #fim) .dots.auto i.on::after {
+  animation: quadro-tempo var(--tempo, 7s) linear both;
+}
+@keyframes quadro-tempo {
+  from { transform: scaleX(0); }
+  to { transform: scaleX(1); }
+}
+@media (max-aspect-ratio: 4/5) {
+  #stage :is(#story, #fim) .dots i.on {
+    width: 16cqw;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  :is(#story, #fim) .dots.auto i.on::after {
+    animation: none;
+  }
+}

@@ -141,10 +141,14 @@
     }
     dots.innerHTML = QUADROS.map((_, k) => `<i class="${k === i ? 'on' : ''}"></i>`).join('');
     proximo.textContent = i === QUADROS.length - 1 ? 'Concluir' : 'Avançar ›';
+    // o ponto do quadro atual vira uma barrinha que enche no tempo do quadro
+    dots.classList.toggle('auto', i < QUADROS.length - 1);
     if (i < QUADROS.length - 1) {
+      const tempo = tempoDe(texto.textContent, q);
+      dots.style.setProperty('--tempo', tempo + 'ms');
       relogio = setTimeout(() => {
         if (tela.classList.contains('on') && atual === i) quadro(i + 1);
-      }, tempoDe(texto.textContent, q));
+      }, tempo);
     }
   }
 
