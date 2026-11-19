@@ -71,7 +71,11 @@
                              guardar o lápis deixa o lápis de fora;
                  "tirinha" — um quadrinho por espaço, como uma
                              história em quadrinhos; no primeiro
-                             erro a história "trava" ali.
+                             erro a história "trava" ali;
+                 "grade"   — só o robô e o cubo: o robô visto de
+                             cima anda numa grade fazendo o que as
+                             cartas mandam (usa os ids dos passos
+                             desse chamado).
                  Sem o campo, não há montagem.
      selo        o selo da ideia que o chamado ensina, entregue na
                  lição da última fase e guardado no crachá:

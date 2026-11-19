@@ -287,7 +287,8 @@ const SITUACAO_ROBO = {
   cena: 'img/pic2.webp',
   fundo: 'img/level2.webp',
   fundoConclusao: 'img/win2.webp',
-  // sem montagem ao lado: a tirinha só repetia as cartas (revisão do professor)
+  // o robô anda numa grade vista de cima, seguindo as cartas (montagem.js)
+  montagem: 'grade',
   fases: [
 
     /* ---------- FASE 1 · a máquina precisa de ordem (3 passos) ---------- */
