@@ -175,10 +175,9 @@
 
   let qi = 0;
   let revendo = false;   // abertura vista de novo pelo menu
-  /* os quadros passam sozinhos, devagar: o tempo cresce com o
-     tamanho da legenda. O último espera o botão. */
+  /* os quadros passam sozinhos, a cada 5 s. O último espera o botão. */
   let relogio = null;
-  const tempoDe = texto => Math.max(7000, texto.length * 95);
+  const tempoDe = () => 5000;   // 5 s por quadro
   function pararRelogio() { clearTimeout(relogio); relogio = null; }
   function quadro(i) {
     qi = i;

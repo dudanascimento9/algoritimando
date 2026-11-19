@@ -60,9 +60,9 @@
   let atual = 0;
   let nome = 'Agente';
   let aoTerminar = null;
-  // os quadros passam sozinhos, devagar; o último espera o botão
+  // os quadros passam sozinhos, a cada 5 s; o último espera o botão
   let relogio = null;
-  const tempoDe = (texto, q) => Math.max(q.album ? 9000 : 7500, texto.length * 95);
+  const tempoDe = () => 5000;   // 5 s por quadro
   function pararRelogio() { clearTimeout(relogio); relogio = null; }
 
   /* ------------- as peças de cada quadro ------------- */

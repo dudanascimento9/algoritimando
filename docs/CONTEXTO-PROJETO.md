@@ -83,7 +83,7 @@ Todos têm **todas as imagens**: cartas, lições, ilustração do cartão (`pic
 - **Promoções:** Estagiário passa a **Agente** com 4 chamados quaisquer e a **Agente Sênior** com os 8. Não há separação entre originais e novos.
 - **Tela final** ("Missão cumprida"): só depois dos 8, com todos os personagens, os selos e as estrelas.
 - **Mapa:** marcadores são alfinetes com o rosto do cliente, posicionados em `LUGARES` (`js/app.js`) em % da imagem `img/story1.webp`. No celular o mapa rola e aparece o aviso "Arraste para ver a cidade" até a criança arrastar.
-- **Abertura:** 4 quadros (`story1` a `story4`) com a cidade nova. Os quadros passam sozinhos (pelo menos 7 s cada); o último espera o botão. A animação final faz o mesmo.
+- **Abertura:** 4 quadros (`story1` a `story4`) com a cidade nova. Os quadros passam sozinhos a cada 5 s, com uma barrinha mostrando o tempo; o último espera o botão. A animação final faz o mesmo.
 - **Nível:** botão "Tela cheia" mostra a cena do chamado inteira (no celular, um ícone no canto da cena).
 - **Configurações:** botão "Configurações" no menu ou ícone de som no topo. Tem Música, Efeitos, **Tela cheia** (Fullscreen API; escondida no iPhone) e **Instalar o jogo** (só aparece pelo site, onde o navegador deixa instalar).
 - **Modo instalável (PWA):** pelo site, o jogo pode ser instalado como aplicativo (ícone do Robô-guia em roxo) e, depois da primeira visita, abre sem internet.
