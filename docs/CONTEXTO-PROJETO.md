@@ -142,7 +142,7 @@ Todos têm **todas as imagens**: cartas, lições, ilustração do cartão (`pic
 
 - Não citar a Área do professor (o editor) em textos de divulgação: ela está desativada.
 - Não inventar oficinas, pilotos, validações ou planos que não existem (por exemplo, "novas fases conforme o cotidiano das comunidades").
-- O jogo **ainda não foi testado com turmas reais**. Textos devem tratar impacto como potencial.
+- O jogo passou por **um primeiro teste com uma turma** (nov/2026). Textos não devem exagerar: foi um teste só; impacto ainda é potencial.
 - Mudanças visuais grandes no jogo só com pedido explícito.
 
 ## Bahia Tech Experience (BTX 2026)
@@ -157,11 +157,14 @@ Todos têm **todas as imagens**: cartas, lições, ilustração do cartão (`pic
 
 ## Pendências
 
-1. **Revisão de Escovar os dentes:** os 4 níveis e as lições foram escritos nesta fase do projeto e ainda não passaram por revisão pedagógica de professor.
-2. **Plantar uma semente:** protótipo reprovado na revisão, em `js/em-progresso.js`. Refazer como 9º chamado ou apagar. O que falta está em `docs/revisao-chamados-novos.md`.
-3. **Área do professor:** funciona (`editor.html`), mas está fora do menu. Decidir se volta.
-4. **Validação com turmas reais:** ainda não aconteceu.
-5. **Ideias não feitas:** testes automáticos no repositório (Playwright + GitHub Actions), modo instalável (PWA), painel de desempenho para o professor.
-7. **Montagem que mostra consequência** (sugestão do item 2 da revisão, aceita para depois): Robô e o cubo numa grade vista de cima, com o robô andando de verdade (quase só código); Limonada (jarra enchendo), Escovar os dentes (bancada da pia) e Lavar as mãos (estado das mãos) precisam de peças novas (prompts a fazer).
-8. **Revisão do professor das imagens novas:** as 10 lições sem comparação, o semáforo de duas luzes e a animação final ainda não foram vistos pelo professor.
-6. **Branches antigos no GitHub**, que podem ser apagados quando o dono quiser: `claude/affectionate-thompson-0v00r7` e `claude/lucid-darwin-3u020f` (este já foi mergeado no PR #29). O `claude/new-session-pna72l` (PRs #37, #38 e #39) também pode ser apagado depois do último merge.
+1. **Revisão do professor das imagens novas:** as 10 lições sem comparação, o semáforo de duas luzes e a animação final.
+2. **Montagem que mostra consequência** (sugestão do item 2 da revisão): Robô e o cubo numa grade vista de cima, com o robô andando de verdade; Limonada (jarra enchendo), Escovar os dentes (bancada da pia) e Lavar as mãos (estado das mãos), com peças novas.
+3. **Ideias não feitas:** testes automáticos no repositório (Playwright + GitHub Actions), modo instalável (PWA), painel de desempenho para o professor.
+4. **Branches antigos no GitHub** para o dono apagar (a sessão não tem permissão para isso): `claude/affectionate-thompson-0v00r7`, `claude/lucid-darwin-3u020f` e `claude/new-session-pxqx2k`.
+
+## Decisões já tomadas
+
+- **Escovar os dentes:** revisado pelo dono (nov/2026).
+- **Sem chamados novos:** o jogo fica com os 8. O protótipo "Plantar uma semente" (`js/em-progresso.js`) continua escondido e não vira 9º chamado.
+- **Área do professor:** fica de fora por enquanto.
+- **Primeiro teste com uma turma:** aconteceu em novembro de 2026. As sugestões da revisão do professor (18/11) vieram dele e da turma.
