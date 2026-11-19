@@ -35,7 +35,7 @@ Cole este arquivo no começo de uma sessão nova, ou peça para a sessão ler `d
 | `js/em-progresso.js` | protótipo "Plantar uma semente" (seção "Em progresso", senha `6234`, botão escondido) |
 | `js/jogo.js` | a partida: tabuleiro, Verificar, dica, estrelas e a cena em tela cheia do nível |
 | `js/app.js` | menu, abertura, crachá, mapa (`LUGARES`), progresso e promoções, sanduíche obrigatório, agente secreto, tela cheia das configurações, tela final |
-| `js/montagem.js` | imagem que se monta ao lado do tabuleiro: `pilha` (sanduíche), `cena` (mochila), `grade` (robô andando numa grade, só código) ou `tirinha` (sem uso) |
+| `js/montagem.js` | imagem que se monta ao lado do tabuleiro: `pilha` (sanduíche), `cena` (mochila), `grade` (robô andando numa grade, só código), `estado` (bancada com objetos que mudam: limonada, dentes, mãos; peças em `img/pecas/`) ou `tirinha` (sem uso) |
 | `js/conclusao.js` | tela de lição (sem imagem, abre direto no texto) |
 | `js/pwa.js`, `sw.js`, `manifest.webmanifest`, `img/icones/` | modo instalável: registra o `sw.js` (gerado por `ferramentas/gerar-sw.js`), que guarda os 235 arquivos no aparelho; botão "Instalar o jogo" nas Configurações (no iPhone, a explicação). Só pelo site; com dois cliques no `index.html` nada muda |
 | `js/album.js` | "Meu álbum": uma figurinha (a imagem da lição) por nível concluído |
@@ -45,7 +45,7 @@ Cole este arquivo no começo de uma sessão nova, ou peça para a sessão ler `d
 | `editor.html`, `js/editor.js` | Área do professor: **desativada**, com o botão escondido no menu (ver "Pendências") |
 | `fontes/` | Fredoka e Nunito em WOFF2, com as licenças OFL |
 | `IMAGENS.md` | o que existe de imagem e onde aparece |
-| `PROMPTS-MONTAGEM.md` | peças da montagem de Limonada, Dentes e Mãos (a gerar) |
+| `PROMPTS-MONTAGEM.md` | peças da montagem de Limonada, Dentes e Mãos (já geradas) |
 | `PROMPTS-REVISAO.md`, `PROMPTS-FINAL.md` | prompts da revisão do professor (lições sem comparação, semáforo de duas luzes) e da animação final; já gerados |
 | `PROMPTS-CARTAS.md`, `PROMPTS-LICOES.md`, `PROMPTS-CENAS.md`, `PROMPTS-PECAS.md`, `PROMPTS-FIM-DO-JOGO.md` | prompts das imagens; quase tudo já gerado, e eles ficam como registro |
 | `docs/revisao-chamados-novos.md` | revisão pedagógica dos chamados novos |
@@ -74,7 +74,7 @@ Todos têm **todas as imagens**: cartas, lições, ilustração do cartão (`pic
 - **Revisão do professor (18/11/2026):**
   - as lições não mostram mais "errado x certo", só cenas positivas; as antigas estão em `img/licoes/comparativas/`, guardadas para uso futuro;
   - na rua, a criança olha a **cor da luz** de um semáforo de pedestre com **duas luzes** (sem bonequinho);
-  - o quadro lateral de montagem existe em Sanduíche (`pilha`), Mochila (`cena`) e Robô e o cubo (`grade`: o robô visto de cima anda, vira e pega o cubo seguindo as cartas, e para na primeira coisa que dá errado); nos outros 5 chamados ele saiu por enquanto;
+  - o quadro lateral de montagem existe em Sanduíche (`pilha`), Mochila (`cena`) e Robô e o cubo (`grade`: o robô visto de cima anda, vira e pega o cubo seguindo as cartas, e para na primeira coisa que dá errado) e em Limonada, Escovar os dentes e Lavar as mãos (`estado`: a bancada muda a cada carta, e uma estrela marca o objeto da carta que veio antes da hora). Abelhas e Rua ficaram sem montagem;
   - **Meu álbum** na central: cada nível concluído cola a figurinha da lição; a tela da lição mostra "+1 figurinha" (chave `algoritimando-album`). A última página, **Figurinhas extras**, mostra as 10 lições antigas (`img/licoes/comparativas/`) e só abre depois da promoção a Agente (4 chamados);
   - **animação final** de 7 quadros antes da "Missão cumprida"; a tela final tem "Ver meu álbum", "Meu certificado" e "Rever a animação";
   - **certificado** em A4 deitado (botão Imprimir), com linhas em branco para Professor(a) e Escola.
@@ -161,9 +161,8 @@ Todos têm **todas as imagens**: cartas, lições, ilustração do cartão (`pic
 ## Pendências
 
 1. **Revisão do professor das imagens novas:** as 10 lições sem comparação, o semáforo de duas luzes e a animação final. O dono recebeu uma página de revisão (artifact privado) com códigos L1–L10, S1–S7 e F1–F6 para o professor responder.
-2. **Montagem de Limonada, Escovar os dentes e Lavar as mãos:** bancada com objetos que mudam de estado a cada carta; para no primeiro passo fora de hora, com uma estrela no objeto. Prompts das 36 peças em `PROMPTS-MONTAGEM.md`; o código entra quando as imagens chegarem. (O Robô e o cubo já tem a montagem `grade`.)
-3. **Ideias não feitas:** testes automáticos no repositório (Playwright + GitHub Actions), painel de desempenho para o professor.
-4. **Branches antigos no GitHub** para o dono apagar (a sessão não tem permissão para isso): `claude/affectionate-thompson-0v00r7`, `claude/lucid-darwin-3u020f` e `claude/new-session-pxqx2k`.
+2. **Ideias não feitas:** testes automáticos no repositório (Playwright + GitHub Actions), painel de desempenho para o professor.
+3. **Branches antigos no GitHub** para o dono apagar (a sessão não tem permissão para isso): `claude/affectionate-thompson-0v00r7`, `claude/lucid-darwin-3u020f` e `claude/new-session-pxqx2k`.
 
 ## Decisões já tomadas
 

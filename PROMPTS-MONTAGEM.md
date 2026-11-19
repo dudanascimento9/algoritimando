@@ -1,5 +1,7 @@
 # Prompts das peças da montagem: Limonada, Escovar os dentes e Lavar as mãos
 
+**Prontos:** as 36 peças já estão no jogo, em `img/pecas/`. Os prompts ficam como registro.
+
 A montagem é a imagem que aparece ao lado do tabuleiro e mostra a consequência da ordem das cartas. Hoje ela existe em três chamados:
 
 | Chamado | Como funciona |

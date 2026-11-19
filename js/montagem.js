@@ -27,6 +27,16 @@
                 a garra no vazio, solta o cubo no chão), ele para ali.
                 O cenário sai dos passos da fase (ligar, virar,
                 plataforma longe), sem nada a configurar.
+   - "estado":  uma bancada (montagemBase) com objetos que mudam de
+                figura a cada carta (o limão lavado, cortado,
+                espremido). Roda as cartas na ordem dos espaços; a
+                primeira que vem antes de uma das suas dependências
+                para tudo ali, com uma estrela no objeto dela.
+                Configuração no chamado: montagemObjetos (onde fica
+                cada objeto, figura inicial, quando aparece) e
+                montagemRegras (que figura cada objeto ganha quando
+                certas cartas já foram feitas; a última que vale
+                ganha). Ver o formato no motor.js.
 
    No PC a montagem fica abaixo da bandeja. No celular ela é
    OPCIONAL e começa desligada: o botão "Montagem" do rodapé troca
@@ -51,7 +61,8 @@
 
   const CHAVE = (window.ALGORITIMANDO_PREVIA ? 'algoritimando-previa' : 'algoritimando') + '-montagem';
 
-  let modo = null;     // 'pilha' | 'cena' | 'tirinha' | null
+  let modo = null;     // 'pilha' | 'cena' | 'tirinha' | 'grade' | 'estado' | null
+  let estado = null;   // estado: o chamado (objetos e regras)
   let passos = {};     // id → passo da fase atual
   let base = '';       // cena: a imagem de fundo (montagemBase)
   // o que já estava na tela: só o que chegou agora anima (senão
@@ -129,7 +140,8 @@
   /* ---------------- preparar a fase ---------------- */
 
   function preparar(situacao, fase) {
-    modo = ['pilha', 'cena', 'tirinha', 'grade'].includes(situacao.montagem) ? situacao.montagem : null;
+    modo = ['pilha', 'cena', 'tirinha', 'grade', 'estado'].includes(situacao.montagem) ? situacao.montagem : null;
+    estado = modo === 'estado' ? situacao : null;
     // a fase pode trocar o fundo da cena (ex.: a mochila já aberta)
     base = fase.montagemBase || situacao.montagemBase || '';
     jaMostrados = new Set();
@@ -160,6 +172,7 @@
     if (modo === 'pilha') desenharPilha(sequencia, erro);
     else if (modo === 'cena') desenharCena(sequencia, erro);
     else if (modo === 'grade') desenharGrade(sequencia);
+    else if (modo === 'estado') desenharEstado(sequencia);
     else desenharTirinha(sequencia, erro);
     jaMostrados = agoraMostrados;
   }
@@ -437,6 +450,61 @@
     quadro.className = 'grade-quadro';
     marcarNovo(quadro, 'grade:' + sequencia.join('|'));
     quadro.append(svg);
+    caixa.append(quadro);
+  }
+
+  /* ---------------- estado: objetos que mudam a cada carta ---------------- */
+
+  function desenharEstado(sequencia) {
+    const s = estado;
+    const ids = new Set(Object.keys(passos));
+    // roda as cartas até a primeira que vem antes da hora
+    const feitos = new Set();
+    let problema = null;
+    for (const id of sequencia) {
+      if (!id) continue;
+      const passo = passos[id];
+      if ((passo.dependeDe || []).some(d => !feitos.has(d))) { problema = id; break; }
+      feitos.add(id);
+    }
+    const onde = (s.montagemOnde || {});
+
+    const cena = document.createElement('div');
+    cena.className = 'estado-cena';
+    if (s.montagemBase) cena.style.backgroundImage = `url("${s.montagemBase}")`;
+
+    for (const obj of s.montagemObjetos || []) {
+      // só aparece se alguma carta da fase mexe com ele (ou "sempre")
+      if (!obj.sempre && !(obj.passos || []).some(id => ids.has(id))) continue;
+      let figura = obj.inicio || null;
+      if (obj.inicioSem && !ids.has(obj.inicioSem.passo)) figura = obj.inicioSem.imagem;
+      for (const regra of s.montagemRegras || []) {
+        if (!(obj.id in regra)) continue;
+        if (regra.quando.every(id => feitos.has(id))) figura = regra[obj.id];
+      }
+      const lugar = document.createElement('div');
+      lugar.className = 'estado-objeto';
+      lugar.style.left = `${obj.x - obj.w / 2}%`;
+      lugar.style.bottom = `${100 - obj.y}%`;
+      lugar.style.width = `${obj.w}%`;
+      if (figura) {
+        const img = imagemDePeca(figura, 'estado-figura');
+        marcarNovo(img, obj.id + ':' + figura);
+        lugar.append(img);
+      }
+      if (problema && onde[problema] === obj.id) {
+        const estrela = document.createElement('span');
+        estrela.className = 'estado-opa';
+        estrela.setAttribute('aria-hidden', 'true');
+        lugar.append(estrela);
+      }
+      cena.append(lugar);
+    }
+    cena.setAttribute('role', 'img');
+    cena.setAttribute('aria-label', problema ? 'A montagem parou: um passo veio antes da hora' : 'A bancada seguindo as cartas');
+    const quadro = document.createElement('div');
+    quadro.className = 'estado-quadro';
+    quadro.append(cena);
     caixa.append(quadro);
   }
 

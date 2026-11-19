@@ -957,7 +957,25 @@ const SITUACAO_MAOS = {
   cena: 'img/pic5.webp',
   fundo: 'img/level5.webp',
   fundoConclusao: 'img/win5.webp',
-  // sem montagem ao lado: a tirinha só repetia as cartas (revisão do professor)
+  // a pia: cada carta muda as mãos, a torneira ou a toalha (montagem.js, modo "estado")
+  montagem: 'estado',
+  montagemBase: 'img/pecas/maos-base.webp',
+  montagemObjetos: [
+    // sem a carta "abrir" (níveis 1 e 2), a torneira já começa aberta
+    { id: 'torneira', x: 41, y: 34, w: 13, inicio: 'img/pecas/maos-torneira.webp', inicioSem: { passo: 'abrir', imagem: 'img/pecas/maos-torneira-aberta.webp' }, sempre: true },
+    { id: 'maos',     x: 44, y: 70, w: 30, inicio: 'img/pecas/maos-sujas.webp', sempre: true },
+    { id: 'toalha',   x: 77.6, y: 60.5, w: 13, inicio: 'img/pecas/maos-toalha.webp', passos: ['secar'] },
+  ],
+  montagemRegras: [
+    { quando: ['abrir'], torneira: 'img/pecas/maos-torneira-aberta.webp' },
+    { quando: ['molhar'], maos: 'img/pecas/maos-molhadas.webp' },
+    { quando: ['sabonete'], maos: 'img/pecas/maos-sabonete.webp' },
+    { quando: ['esfregar'], maos: 'img/pecas/maos-espuma.webp' },
+    { quando: ['enxaguar'], maos: 'img/pecas/maos-limpas.webp' },
+    { quando: ['fechar'], torneira: 'img/pecas/maos-torneira.webp' },
+    { quando: ['secar'], maos: 'img/pecas/maos-secas.webp', toalha: 'img/pecas/maos-toalha-usada.webp' },
+  ],
+  montagemOnde: { abrir: 'torneira', molhar: 'maos', sabonete: 'maos', esfregar: 'maos', enxaguar: 'maos', fechar: 'torneira', secar: 'toalha' },
   // o selo da ideia: entregue na lição do último nível (ver motor.js)
   selo: {
     nome: 'Repetição',
@@ -1311,7 +1329,27 @@ const SITUACAO_LIMONADA = {
   fundo: 'img/level7.webp',
   fundoConclusao: 'img/win7.webp',
   // um quadrinho por passo (uma "cena" da jarra pediria peças que
-  // sem montagem ao lado: a tirinha só repetia as cartas (revisão do professor)
+  // a bancada: cada carta muda um objeto (montagem.js, modo "estado")
+  montagem: 'estado',
+  montagemBase: 'img/pecas/limonada-base.webp',
+  montagemObjetos: [
+    { id: 'limao',  x: 21, y: 68, w: 17, inicio: 'img/pecas/limonada-limao.webp', passos: ['lavar', 'cortar', 'espremer'] },
+    { id: 'jarra',  x: 45, y: 69, w: 17, inicio: 'img/pecas/limonada-jarra.webp', passos: ['espremer', 'agua', 'misturar'] },
+    { id: 'acucar', x: 65, y: 68, w: 11, inicio: 'img/pecas/limonada-acucar.webp', passos: ['acucar'] },
+    { id: 'copo',   x: 80, y: 68, w: 9,  inicio: 'img/pecas/limonada-copo.webp', passos: ['servir'] },
+  ],
+  montagemRegras: [
+    { quando: ['lavar'], limao: 'img/pecas/limonada-limao-lavado.webp' },
+    { quando: ['cortar'], limao: 'img/pecas/limonada-limao-cortado.webp' },
+    { quando: ['espremer'], limao: 'img/pecas/limonada-limao-espremido.webp', jarra: 'img/pecas/limonada-jarra-suco.webp' },
+    { quando: ['agua'], jarra: 'img/pecas/limonada-jarra-agua.webp' },
+    { quando: ['espremer', 'agua'], jarra: 'img/pecas/limonada-jarra-agua-suco.webp' },
+    { quando: ['acucar'], acucar: 'img/pecas/limonada-acucar-usado.webp' },
+    { quando: ['misturar'], jarra: 'img/pecas/limonada-jarra-limonada.webp' },
+    { quando: ['servir'], copo: 'img/pecas/limonada-copo-cheio.webp' },
+  ],
+  // onde aparece a estrela quando a carta vem antes da hora
+  montagemOnde: { lavar: 'limao', cortar: 'limao', espremer: 'limao', agua: 'jarra', acucar: 'acucar', misturar: 'jarra', servir: 'copo' },
   // o selo da ideia: entregue na lição do último nível (ver motor.js)
   selo: {
     nome: 'Ao mesmo tempo',
@@ -1466,7 +1504,29 @@ const SITUACAO_DENTES = {
   cena: 'img/pic8.webp',
   fundo: 'img/level8.webp',
   fundoConclusao: 'img/win8.webp',
-  // sem montagem ao lado: a tirinha só repetia as cartas (revisão do professor)
+  // a bancada da pia: cada carta muda um objeto (montagem.js, modo "estado")
+  montagem: 'estado',
+  montagemBase: 'img/pecas/dentes-base.webp',
+  montagemObjetos: [
+    { id: 'porta',  x: 14, y: 73, w: 12, inicio: 'img/pecas/dentes-porta-escova.webp', sempre: true },
+    { id: 'copo',   x: 27, y: 73, w: 9,  inicio: 'img/pecas/dentes-copo-agua.webp', passos: ['enxaguar'] },
+    { id: 'escova', x: 76, y: 74, w: 19, inicio: null, sempre: true },
+    { id: 'pasta',  x: 91, y: 73, w: 8,  inicio: 'img/pecas/dentes-pasta.webp', sempre: true },
+  ],
+  montagemRegras: [
+    { quando: ['pegar-escova'], porta: 'img/pecas/dentes-porta-vazio.webp', escova: 'img/pecas/dentes-escova.webp' },
+    { quando: ['abrir-pasta'], pasta: 'img/pecas/dentes-pasta-aberta.webp' },
+    { quando: ['por-pasta'], escova: 'img/pecas/dentes-escova-pasta.webp', pasta: 'img/pecas/dentes-pasta-aberta.webp' },
+    { quando: ['fechar-pasta'], pasta: 'img/pecas/dentes-pasta.webp' },
+    { quando: ['escovar'], escova: 'img/pecas/dentes-escova-espuma.webp' },
+    { quando: ['enxaguar'], copo: 'img/pecas/dentes-copo-agua-usado.webp' },
+    { quando: ['lavar-escova'], escova: 'img/pecas/dentes-escova-limpa.webp' },
+    { quando: ['guardar-escova'], porta: 'img/pecas/dentes-porta-escova-limpa.webp', escova: null },
+  ],
+  montagemOnde: {
+    'pegar-escova': 'porta', 'abrir-pasta': 'pasta', 'por-pasta': 'escova', 'fechar-pasta': 'pasta',
+    escovar: 'escova', enxaguar: 'copo', 'lavar-escova': 'escova', 'guardar-escova': 'porta',
+  },
   // o selo da ideia: entregue na lição do último nível (ver motor.js)
   selo: {
     nome: 'Abre e fecha',
