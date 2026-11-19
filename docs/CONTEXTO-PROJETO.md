@@ -1,6 +1,6 @@
 # Algoritimando: contexto para uma nova sessão
 
-Cole este arquivo no começo de uma sessão nova, ou peça para a sessão ler `docs/CONTEXTO-PROJETO.md`, antes de pedir qualquer mudança. Atualizado em 18/11/2026.
+Cole este arquivo no começo de uma sessão nova, ou peça para a sessão ler `docs/CONTEXTO-PROJETO.md`, antes de pedir qualquer mudança. Atualizado em 19/11/2026.
 
 ## O projeto
 
@@ -35,8 +35,9 @@ Cole este arquivo no começo de uma sessão nova, ou peça para a sessão ler `d
 | `js/em-progresso.js` | protótipo "Plantar uma semente" (seção "Em progresso", senha `6234`, botão escondido) |
 | `js/jogo.js` | a partida: tabuleiro, Verificar, dica, estrelas e a cena em tela cheia do nível |
 | `js/app.js` | menu, abertura, crachá, mapa (`LUGARES`), progresso e promoções, sanduíche obrigatório, agente secreto, tela cheia das configurações, tela final |
-| `js/montagem.js` | imagem que se monta ao lado do tabuleiro: `pilha`, `cena` ou `tirinha` |
+| `js/montagem.js` | imagem que se monta ao lado do tabuleiro: `pilha` (sanduíche), `cena` (mochila), `grade` (robô andando numa grade, só código), `estado` (bancada com objetos que mudam: limonada, dentes, mãos; peças em `img/pecas/`) ou `tirinha` (sem uso) |
 | `js/conclusao.js` | tela de lição (sem imagem, abre direto no texto) |
+| `js/pwa.js`, `sw.js`, `manifest.webmanifest`, `img/icones/` | modo instalável: registra o `sw.js` (gerado por `ferramentas/gerar-sw.js`), que guarda os 235 arquivos no aparelho; botão "Instalar o jogo" nas Configurações (no iPhone, a explicação). Só pelo site; com dois cliques no `index.html` nada muda |
 | `js/album.js` | "Meu álbum": uma figurinha (a imagem da lição) por nível concluído |
 | `js/final.js` | animação final (`fim1` a `fim6` + álbum completo) e certificado para imprimir |
 | `js/som.js`, `audio/musica-tema.mp3` | música, efeitos sintetizados (`acerto`, `erro`, `vitoria`, `clique`, `segredo`) e painel de configurações |
@@ -44,6 +45,7 @@ Cole este arquivo no começo de uma sessão nova, ou peça para a sessão ler `d
 | `editor.html`, `js/editor.js` | Área do professor: **desativada**, com o botão escondido no menu (ver "Pendências") |
 | `fontes/` | Fredoka e Nunito em WOFF2, com as licenças OFL |
 | `IMAGENS.md` | o que existe de imagem e onde aparece |
+| `PROMPTS-MONTAGEM.md` | peças da montagem de Limonada, Dentes e Mãos (já geradas) |
 | `PROMPTS-REVISAO.md`, `PROMPTS-FINAL.md` | prompts da revisão do professor (lições sem comparação, semáforo de duas luzes) e da animação final; já gerados |
 | `PROMPTS-CARTAS.md`, `PROMPTS-LICOES.md`, `PROMPTS-CENAS.md`, `PROMPTS-PECAS.md`, `PROMPTS-FIM-DO-JOGO.md` | prompts das imagens; quase tudo já gerado, e eles ficam como registro |
 | `docs/revisao-chamados-novos.md` | revisão pedagógica dos chamados novos |
@@ -72,7 +74,7 @@ Todos têm **todas as imagens**: cartas, lições, ilustração do cartão (`pic
 - **Revisão do professor (18/11/2026):**
   - as lições não mostram mais "errado x certo", só cenas positivas; as antigas estão em `img/licoes/comparativas/`, guardadas para uso futuro;
   - na rua, a criança olha a **cor da luz** de um semáforo de pedestre com **duas luzes** (sem bonequinho);
-  - o quadro lateral de montagem só existe em Sanduíche (`pilha`) e Mochila (`cena`); nos outros 6 chamados ele saiu;
+  - o quadro lateral de montagem existe em Sanduíche (`pilha`), Mochila (`cena`) e Robô e o cubo (`grade`: o robô visto de cima anda, vira e pega o cubo seguindo as cartas, e para na primeira coisa que dá errado) e em Limonada, Escovar os dentes e Lavar as mãos (`estado`: a bancada muda a cada carta, e uma estrela marca o objeto da carta que veio antes da hora). Abelhas e Rua ficaram sem montagem;
   - **Meu álbum** na central: cada nível concluído cola a figurinha da lição; a tela da lição mostra "+1 figurinha" (chave `algoritimando-album`). A última página, **Figurinhas extras**, mostra as 10 lições antigas (`img/licoes/comparativas/`) e só abre depois da promoção a Agente (4 chamados);
   - **animação final** de 7 quadros antes da "Missão cumprida"; a tela final tem "Ver meu álbum", "Meu certificado" e "Rever a animação";
   - **certificado** em A4 deitado (botão Imprimir), com linhas em branco para Professor(a) e Escola.
@@ -81,9 +83,10 @@ Todos têm **todas as imagens**: cartas, lições, ilustração do cartão (`pic
 - **Promoções:** Estagiário passa a **Agente** com 4 chamados quaisquer e a **Agente Sênior** com os 8. Não há separação entre originais e novos.
 - **Tela final** ("Missão cumprida"): só depois dos 8, com todos os personagens, os selos e as estrelas.
 - **Mapa:** marcadores são alfinetes com o rosto do cliente, posicionados em `LUGARES` (`js/app.js`) em % da imagem `img/story1.webp`. No celular o mapa rola e aparece o aviso "Arraste para ver a cidade" até a criança arrastar.
-- **Abertura:** 4 quadros (`story1` a `story4`) com a cidade nova.
+- **Abertura:** 4 quadros (`story1` a `story4`) com a cidade nova. Os quadros passam sozinhos (pelo menos 7 s cada); o último espera o botão. A animação final faz o mesmo.
 - **Nível:** botão "Tela cheia" mostra a cena do chamado inteira (no celular, um ícone no canto da cena).
-- **Configurações:** botão "Configurações" no menu ou ícone de som no topo. Tem Música, Efeitos e **Tela cheia** (Fullscreen API; escondida no iPhone).
+- **Configurações:** botão "Configurações" no menu ou ícone de som no topo. Tem Música, Efeitos, **Tela cheia** (Fullscreen API; escondida no iPhone) e **Instalar o jogo** (só aparece pelo site, onde o navegador deixa instalar).
+- **Modo instalável (PWA):** pelo site, o jogo pode ser instalado como aplicativo (ícone do Robô-guia em roxo) e, depois da primeira visita, abre sem internet.
 - **Crachá** da tela "Quem é você, agente?": feito em HTML/CSS, com presilha, cargo, estrelas do cargo e código do agente.
 - **Agente secreto** (só para devs e para quem o dono contar):
   - **Como abrir:** **10 toques seguidos e rápidos** (no máximo 0,6 s entre eles) na terceira estrela do crachá. A estrela não muda nada visualmente.
@@ -91,6 +94,11 @@ Todos têm **todas as imagens**: cartas, lições, ilustração do cartão (`pic
   - **Onde fica guardado:** na chave `algoritimando-segredo`. Some com "Reiniciar o jogo" ou "Jogar tudo de novo", e o agente volta ao primeiro.
   - **Imagens:** `av6`, `agente-secreto`, `promo6`.
   - **Não divulgar o segredo** em textos para o público.
+- **Atalho de dev** (só para devs; mesmo sigilo do agente secreto):
+  - **Como usar:** no mapa da central, **15 toques na árvore do alto à esquerda** (à esquerda da Fábrica, perto de x 9%, y 38% da `story1`) e, logo depois, **15 toques na casa do canto inferior esquerdo** (perto de x 7%, y 73%).
+  - **Regras:** mais de 2,5 s entre toques, ou um toque fora da área, zera a contagem. Toque num marcador também zera.
+  - **O que acontece:** conclui os 8 chamados com 3 estrelas em todos os níveis e segue o caminho normal: promoção a Agente, a Sênior e animação final.
+  - **Onde está:** `js/app.js`, bloco "atalho de desenvolvimento no mapa" (áreas em `ZONAS`). Nenhum sinal visual ou sonoro no jogo, e nada sobre ele em commits ou PRs.
 
 ## Padrões técnicos
 
@@ -107,7 +115,7 @@ Todos têm **todas as imagens**: cartas, lições, ilustração do cartão (`pic
   | Selos | 400×400 |
 
 - **Nomes:** `img/passos/<chamado>-NN.webp` e `img/licoes/<chamado>-N.webp`.
-- **Cache:** os `.js` e `.css` são carregados com `?v=AAAAMMDDHHMM`. **A cada mudança publicada, atualize esse número** no `index.html` e no `editor.html`. As imagens da abertura têm o próprio `?v=` em `js/app.js`, e o mapa tem o dele no `style.css`.
+- **Cache:** os `.js` e `.css` são carregados com `?v=AAAAMMDDHHMM`. **A cada mudança publicada, atualize esse número** no `index.html` e no `editor.html` e **rode `node ferramentas/gerar-sw.js`**, que refaz o `sw.js` com a versão e a lista de arquivos (sem isso, quem instalou o jogo continua com a versão antiga guardada). As imagens da abertura têm o próprio `?v=` em `js/app.js`, e o mapa tem o dele no `style.css`.
 - **localStorage:**
   - `algoritimando-perfil`, `algoritimando-progresso`, `algoritimando-som`, `algoritimando-som-ajustes`, `algoritimando-montagem`, `algoritimando-segredo`, `algoritimando-album`;
   - também existem `algoritimando-em-progresso` (protótipos), `algoritimando-editor-rascunho` e as chaves `algoritimando-previa*` (prévia do editor);
@@ -137,7 +145,7 @@ Todos têm **todas as imagens**: cartas, lições, ilustração do cartão (`pic
 
 - Não citar a Área do professor (o editor) em textos de divulgação: ela está desativada.
 - Não inventar oficinas, pilotos, validações ou planos que não existem (por exemplo, "novas fases conforme o cotidiano das comunidades").
-- O jogo **ainda não foi testado com turmas reais**. Textos devem tratar impacto como potencial.
+- O jogo passou por **um primeiro teste com uma turma** (nov/2026). Textos não devem exagerar: foi um teste só; impacto ainda é potencial.
 - Mudanças visuais grandes no jogo só com pedido explícito.
 
 ## Bahia Tech Experience (BTX 2026)
@@ -152,11 +160,13 @@ Todos têm **todas as imagens**: cartas, lições, ilustração do cartão (`pic
 
 ## Pendências
 
-0. **Certificado:** falta o dono decidir logo (UNEB, escola), nome da escola impresso ou em branco, textos e nomes das ideias.
+1. **Revisão do professor das imagens novas:** as 10 lições sem comparação, o semáforo de duas luzes e a animação final. O dono recebeu uma página de revisão (artifact privado) com códigos L1–L10, S1–S7 e F1–F6 para o professor responder.
+2. **Ideias não feitas:** testes automáticos no repositório (Playwright + GitHub Actions), painel de desempenho para o professor.
+3. **Branches antigos no GitHub** para o dono apagar (a sessão não tem permissão para isso): `claude/affectionate-thompson-0v00r7`, `claude/lucid-darwin-3u020f` e `claude/new-session-pxqx2k`.
 
-1. **Revisão de Escovar os dentes:** os 4 níveis e as lições foram escritos nesta fase do projeto e ainda não passaram por revisão pedagógica de professor.
-2. **Plantar uma semente:** protótipo reprovado na revisão, em `js/em-progresso.js`. Refazer como 9º chamado ou apagar. O que falta está em `docs/revisao-chamados-novos.md`.
-3. **Área do professor:** funciona (`editor.html`), mas está fora do menu. Decidir se volta.
-4. **Validação com turmas reais:** ainda não aconteceu.
-5. **Ideias não feitas:** testes automáticos no repositório (Playwright + GitHub Actions), modo instalável (PWA), painel de desempenho para o professor.
-6. **Branches antigos no GitHub**, que podem ser apagados quando o dono quiser: `claude/affectionate-thompson-0v00r7` e `claude/lucid-darwin-3u020f` (este já foi mergeado no PR #29).
+## Decisões já tomadas
+
+- **Escovar os dentes:** revisado pelo dono (nov/2026).
+- **Sem chamados novos:** o jogo fica com os 8. O protótipo "Plantar uma semente" (`js/em-progresso.js`) continua escondido e não vira 9º chamado.
+- **Área do professor:** fica de fora por enquanto.
+- **Primeiro teste com uma turma:** aconteceu em novembro de 2026. As sugestões da revisão do professor (18/11) vieram dele e da turma.

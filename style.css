@@ -5508,3 +5508,138 @@ body.arrastando * {
     grid-template-columns: repeat(5, minmax(0, 11cqw));
   }
 }
+
+/* ===== montagem "grade": o robô visto de cima (montagem.js) ===== */
+.grade-quadro {
+  width: 100%;
+  height: 100%;
+  min-height: 0;
+  display: grid;
+  place-items: center;
+}
+.grade-quadro.nova .g-robo {
+  animation: robo-chega 0.45s ease-out;
+}
+@keyframes robo-chega {
+  from { opacity: 0.4; }
+}
+.grade-svg {
+  width: 100%;
+  height: 100%;
+  max-height: 100%;
+}
+.g-chao { fill: #8f8a96; }
+.g-piso { fill: #d9d5de; }
+.g-plataforma { fill: #3c8f5a; stroke: #24543a; stroke-width: 4; }
+.g-plataforma.pronta { fill: #5cc47e; filter: drop-shadow(0 0 10px #8ff0b0); }
+.g-plataforma-luz { fill: #9fe8b7; }
+.g-caminho {
+  fill: none;
+  stroke: #7a52bd;
+  stroke-width: 6;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-dasharray: 2 14;
+}
+.g-cubo { fill: #a7a3ab; stroke: #3b2a2a; stroke-width: 4; }
+.g-roda { fill: #3b2a2a; }
+.g-corpo { fill: #f2994a; stroke: #3b2a2a; stroke-width: 4; }
+.g-seta { fill: #fff3e6; }
+.g-garra { fill: none; stroke: #6e6872; stroke-width: 7; stroke-linecap: round; }
+.g-robo.desligado .g-corpo { fill: #b9b4bd; }
+.g-zzz { font-family: Fredoka, sans-serif; font-size: 26px; font-weight: 600; fill: #6e6872; }
+.g-batida { fill: #ffd34d; stroke: #e2543a; stroke-width: 4; stroke-linejoin: round; }
+@media (prefers-reduced-motion: reduce) {
+  .grade-quadro.nova .g-robo { animation: none; }
+}
+
+/* abertura e animação final: o quadro atual mostra quanto falta para
+   passar sozinho (a barrinha enche no tempo do quadro; app.js e final.js) */
+:is(#story, #fim) .dots {
+  align-items: center;
+}
+:is(#story, #fim) .dots i.on {
+  width: 7cqw;
+  position: relative;
+  overflow: hidden;
+  background: #e6dcf4;
+}
+:is(#story, #fim) .dots i.on::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: var(--p);
+  transform-origin: left center;
+}
+:is(#story, #fim) .dots.auto i.on::after {
+  animation: quadro-tempo var(--tempo, 7s) linear both;
+}
+@keyframes quadro-tempo {
+  from { transform: scaleX(0); }
+  to { transform: scaleX(1); }
+}
+@media (max-aspect-ratio: 4/5) {
+  #stage :is(#story, #fim) .dots i.on {
+    width: 16cqw;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  :is(#story, #fim) .dots.auto i.on::after {
+    animation: none;
+  }
+}
+
+/* ===== montagem "estado": a bancada com objetos que mudam (montagem.js) ===== */
+.estado-quadro {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+}
+.estado-cena {
+  position: relative;
+  width: min(100cqw, 133.33cqh);
+  aspect-ratio: 4 / 3;
+  max-width: 100%;
+  background: #f3e6cf center / cover no-repeat;
+  border-radius: 1cqw;
+  overflow: hidden;
+}
+.estado-objeto {
+  position: absolute;
+  display: grid;
+  align-items: end;
+}
+.estado-figura {
+  display: block;
+  width: 100%;
+  height: auto;
+  filter: drop-shadow(0 0.6cqh 0.5cqh rgba(60, 40, 20, 0.25));
+}
+.estado-figura.nova {
+  animation: estado-muda 0.4s ease-out;
+}
+@keyframes estado-muda {
+  from { transform: scale(0.85); opacity: 0.3; }
+}
+/* a estrela de "opa": o passo que veio antes da hora */
+.estado-opa {
+  position: absolute;
+  left: 50%;
+  top: 40%;
+  width: max(26%, 8cqw);
+  aspect-ratio: 1;
+  transform: translate(-50%, -50%);
+  background: #ffd34d;
+  border: 0;
+  clip-path: polygon(50% 0%, 61% 30%, 95% 21%, 72% 48%, 98% 74%, 64% 70%, 50% 100%, 36% 70%, 2% 74%, 28% 48%, 5% 21%, 39% 30%);
+  filter: drop-shadow(0 0 0.6cqw #e2543a);
+  animation: estado-opa 0.5s ease-out;
+}
+@keyframes estado-opa {
+  from { transform: translate(-50%, -50%) scale(0.3) rotate(-30deg); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .estado-figura.nova,
+  .estado-opa { animation: none; }
+}

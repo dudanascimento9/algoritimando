@@ -20,6 +20,23 @@
    - "tirinha": um quadrinho por espaço; no primeiro erro aquele
                 quadrinho fica marcado e os seguintes ficam
                 apagados — a história "trava" ali.
+   - "grade":   o robô do chamado visto de cima, numa grade da
+                fábrica. Ele faz de verdade o que as cartas mandam, na
+                ordem dos espaços: vira, anda, abre e fecha a garra.
+                Na primeira coisa que dá errado (bate na parede, fecha
+                a garra no vazio, solta o cubo no chão), ele para ali.
+                O cenário sai dos passos da fase (ligar, virar,
+                plataforma longe), sem nada a configurar.
+   - "estado":  uma bancada (montagemBase) com objetos que mudam de
+                figura a cada carta (o limão lavado, cortado,
+                espremido). Roda as cartas na ordem dos espaços; a
+                primeira que vem antes de uma das suas dependências
+                para tudo ali, com uma estrela no objeto dela.
+                Configuração no chamado: montagemObjetos (onde fica
+                cada objeto, figura inicial, quando aparece) e
+                montagemRegras (que figura cada objeto ganha quando
+                certas cartas já foram feitas; a última que vale
+                ganha). Ver o formato no motor.js.
 
    No PC a montagem fica abaixo da bandeja. No celular ela é
    OPCIONAL e começa desligada: o botão "Montagem" do rodapé troca
@@ -44,7 +61,8 @@
 
   const CHAVE = (window.ALGORITIMANDO_PREVIA ? 'algoritimando-previa' : 'algoritimando') + '-montagem';
 
-  let modo = null;     // 'pilha' | 'cena' | 'tirinha' | null
+  let modo = null;     // 'pilha' | 'cena' | 'tirinha' | 'grade' | 'estado' | null
+  let estado = null;   // estado: o chamado (objetos e regras)
   let passos = {};     // id → passo da fase atual
   let base = '';       // cena: a imagem de fundo (montagemBase)
   // o que já estava na tela: só o que chegou agora anima (senão
@@ -122,7 +140,8 @@
   /* ---------------- preparar a fase ---------------- */
 
   function preparar(situacao, fase) {
-    modo = ['pilha', 'cena', 'tirinha'].includes(situacao.montagem) ? situacao.montagem : null;
+    modo = ['pilha', 'cena', 'tirinha', 'grade', 'estado'].includes(situacao.montagem) ? situacao.montagem : null;
+    estado = modo === 'estado' ? situacao : null;
     // a fase pode trocar o fundo da cena (ex.: a mochila já aberta)
     base = fase.montagemBase || situacao.montagemBase || '';
     jaMostrados = new Set();
@@ -152,6 +171,8 @@
 
     if (modo === 'pilha') desenharPilha(sequencia, erro);
     else if (modo === 'cena') desenharCena(sequencia, erro);
+    else if (modo === 'grade') desenharGrade(sequencia);
+    else if (modo === 'estado') desenharEstado(sequencia);
     else desenharTirinha(sequencia, erro);
     jaMostrados = agoraMostrados;
   }
@@ -268,6 +289,223 @@
     });
 
     caixa.append(fila);
+  }
+
+  /* ---------------- grade: o robô anda de verdade ---------------- */
+
+  const COLS = 6, LINHAS = 4, LADO = 100;
+  const DIRS = { L: [1, 0], S: [0, 1], O: [-1, 0], N: [0, -1] };
+  const ANGULO = { L: 0, S: 90, O: 180, N: -90 };
+  const NS = 'http://www.w3.org/2000/svg';
+
+  function el(nome, attrs, pai) {
+    const e = document.createElementNS(NS, nome);
+    for (const k in attrs) e.setAttribute(k, attrs[k]);
+    if (pai) pai.append(e);
+    return e;
+  }
+  const centro = ([c, l]) => [c * LADO + LADO / 2, l * LADO + LADO / 2];
+  const igual = (a, b) => a && b && a[0] === b[0] && a[1] === b[1];
+  const somar = (p, d) => [p[0] + DIRS[d][0], p[1] + DIRS[d][1]];
+  const dentro = p => p[0] >= 0 && p[0] < COLS && p[1] >= 0 && p[1] < LINHAS;
+  const rumoPara = (de, para) => (de[1] === para[1] ? (para[0] > de[0] ? 'L' : 'O') : (para[1] > de[1] ? 'S' : 'N'));
+
+  /* o cenário sai dos passos da fase */
+  function cenario() {
+    const tem = id => !!passos[id];
+    const longe = tem('andar-plataforma');
+    return {
+      ligado: !tem('ligar'),
+      robo: [1, 2],
+      rumo: tem('virar-cubo') ? 'N' : 'L',
+      cubo: [4, 2],
+      // plataforma longe (níveis 4 e 5) ou logo depois do cubo
+      plataforma: longe ? [3, 0] : [5, 2],
+      garraAberta: !tem('abrir-garra'),
+    };
+  }
+
+  /* roda as cartas, na ordem, até a primeira coisa dar errado */
+  function simular(sequencia) {
+    const e = cenario();
+    e.caminho = [e.robo.slice()];
+    e.segurando = false;
+    e.problema = null;     // { tipo, ponto }
+    e.pronto = false;
+    e.parado = 0;          // cartas que o robô desligado ignorou
+
+    const andar = alvo => {
+      // anda até ficar de frente para o alvo; se não estiver indo
+      // para ele, anda até a parede e bate
+      for (;;) {
+        const prox = somar(e.robo, e.rumo);
+        if (igual(prox, alvo)) return true;
+        const bloqueio = !dentro(prox) || (!e.segurando && igual(prox, e.cubo)) || igual(prox, e.plataforma);
+        if (bloqueio) { e.problema = { tipo: 'bateu', ponto: prox }; return false; }
+        e.robo = prox;
+        e.caminho.push(prox.slice());
+      }
+    };
+    const deFrenteParaCubo = () => !e.segurando && igual(somar(e.robo, e.rumo), e.cubo);
+
+    for (const id of sequencia) {
+      if (!id || e.problema || e.pronto) continue;
+      if (!e.ligado && id !== 'ligar') { e.parado += 1; continue; }
+      switch (id) {
+        case 'ligar': e.ligado = true; break;
+        case 'virar-cubo': e.rumo = rumoPara(e.robo, e.cubo); break;
+        case 'virar-plataforma': e.rumo = rumoPara(e.robo, e.plataforma); break;
+        case 'andar':
+        case 'andar-cubo': andar(e.cubo); break;
+        case 'andar-plataforma': andar(e.plataforma); break;
+        case 'abrir-garra':
+          if (e.segurando) { e.segurando = false; e.cubo = somar(e.robo, e.rumo); e.problema = { tipo: 'caiu', ponto: e.cubo }; }
+          e.garraAberta = true;
+          break;
+        case 'pegar':
+        case 'fechar-garra':
+          if (!deFrenteParaCubo()) { e.garraAberta = false; e.problema = { tipo: 'vazio', ponto: somar(e.robo, e.rumo) }; break; }
+          if (!e.garraAberta) { e.problema = { tipo: 'empurrou', ponto: e.cubo }; break; }
+          e.garraAberta = false;
+          e.segurando = true;
+          break;
+        case 'colocar':
+          // "coloque na plataforma" esconde os passos: leva e solta
+          if (!e.segurando) { e.problema = { tipo: 'vazio', ponto: somar(e.robo, e.rumo) }; break; }
+          e.robo = [e.plataforma[0] - 1, e.plataforma[1]];
+          e.caminho.push(e.robo.slice());
+          e.rumo = 'L';
+          e.segurando = false;
+          e.cubo = e.plataforma.slice();
+          e.pronto = true;
+          break;
+        case 'soltar':
+          if (!e.segurando) { e.problema = { tipo: 'vazio', ponto: somar(e.robo, e.rumo) }; break; }
+          e.segurando = false;
+          e.garraAberta = true;
+          e.cubo = somar(e.robo, e.rumo);
+          if (igual(e.cubo, e.plataforma)) e.pronto = true;
+          else e.problema = { tipo: 'caiu', ponto: e.cubo };
+          break;
+      }
+    }
+    return e;
+  }
+
+  function desenharGrade(sequencia) {
+    const e = simular(sequencia);
+    const svg = el('svg', {
+      viewBox: `0 0 ${COLS * LADO} ${LINHAS * LADO}`, class: 'grade-svg', role: 'img',
+      'aria-label': e.pronto ? 'O robô levou o cubo até a plataforma'
+        : e.problema ? 'O robô parou: algo deu errado' : 'O robô seguindo as cartas',
+    });
+    // chão da fábrica
+    el('rect', { x: 0, y: 0, width: COLS * LADO, height: LINHAS * LADO, rx: 18, class: 'g-chao' }, svg);
+    for (let c = 0; c < COLS; c++) {
+      for (let l = 0; l < LINHAS; l++) {
+        el('rect', { x: c * LADO + 4, y: l * LADO + 4, width: LADO - 8, height: LADO - 8, rx: 10, class: 'g-piso' }, svg);
+      }
+    }
+    // plataforma
+    const [px, py] = centro(e.plataforma);
+    el('circle', { cx: px, cy: py, r: 36, class: 'g-plataforma' + (e.pronto ? ' pronta' : '') }, svg);
+    el('circle', { cx: px, cy: py, r: 22, class: 'g-plataforma-luz' }, svg);
+    // o caminho feito
+    if (e.caminho.length > 1) {
+      el('polyline', { points: e.caminho.map(centro).map(p => p.join(',')).join(' '), class: 'g-caminho' }, svg);
+    }
+    // o cubo, quando não está na garra
+    if (!e.segurando) {
+      const [cx, cy] = centro(e.cubo);
+      el('rect', { x: cx - 26, y: cy - 26, width: 52, height: 52, rx: 8, class: 'g-cubo' }, svg);
+    }
+    // o robô: corpo laranja, rodas, garra na frente; desligado fica cinza
+    const [rx, ry] = centro(e.robo);
+    const robo = el('g', { transform: `translate(${rx} ${ry}) rotate(${ANGULO[e.rumo]})`, class: 'g-robo' + (e.ligado ? '' : ' desligado') }, svg);
+    el('rect', { x: -30, y: -38, width: 46, height: 14, rx: 6, class: 'g-roda' }, robo);
+    el('rect', { x: -30, y: 24, width: 46, height: 14, rx: 6, class: 'g-roda' }, robo);
+    el('rect', { x: -34, y: -28, width: 56, height: 56, rx: 14, class: 'g-corpo' }, robo);
+    el('path', { d: 'M -14 -10 L 6 0 L -14 10 Z', class: 'g-seta' }, robo);
+    const abre = e.garraAberta ? 16 : 7;
+    el('path', { d: `M 22 ${-abre} q 18 0 22 ${abre * 0.5}`, class: 'g-garra' }, robo);
+    el('path', { d: `M 22 ${abre} q 18 0 22 ${-abre * 0.5}`, class: 'g-garra' }, robo);
+    if (e.segurando) el('rect', { x: 30, y: -16, width: 32, height: 32, rx: 5, class: 'g-cubo' }, robo);
+    // desligado, ou ligado tarde demais: as cartas de antes não fizeram nada
+    if (!e.ligado || e.parado) {
+      const z = el('text', { x: rx + 18, y: ry - 34, class: 'g-zzz' }, svg);
+      z.textContent = 'z z';
+    }
+    // onde deu errado: uma estrela de batida
+    if (e.problema) {
+      const [bx, by] = centro(e.problema.ponto).map((v, k) => (k === 0
+        ? Math.max(30, Math.min(COLS * LADO - 30, v)) : Math.max(30, Math.min(LINHAS * LADO - 30, v))));
+      const pontos = [];
+      for (let k = 0; k < 16; k++) {
+        const r = k % 2 ? 12 : 28, a = (Math.PI * k) / 8;
+        pontos.push(`${bx + r * Math.cos(a)},${by + r * Math.sin(a)}`);
+      }
+      el('polygon', { points: pontos.join(' '), class: 'g-batida' }, svg);
+    }
+    const quadro = document.createElement('div');
+    quadro.className = 'grade-quadro';
+    marcarNovo(quadro, 'grade:' + sequencia.join('|'));
+    quadro.append(svg);
+    caixa.append(quadro);
+  }
+
+  /* ---------------- estado: objetos que mudam a cada carta ---------------- */
+
+  function desenharEstado(sequencia) {
+    const s = estado;
+    const ids = new Set(Object.keys(passos));
+    // roda as cartas até a primeira que vem antes da hora
+    const feitos = new Set();
+    let problema = null;
+    for (const id of sequencia) {
+      if (!id) continue;
+      const passo = passos[id];
+      if ((passo.dependeDe || []).some(d => !feitos.has(d))) { problema = id; break; }
+      feitos.add(id);
+    }
+    const onde = (s.montagemOnde || {});
+
+    const cena = document.createElement('div');
+    cena.className = 'estado-cena';
+    if (s.montagemBase) cena.style.backgroundImage = `url("${s.montagemBase}")`;
+
+    for (const obj of s.montagemObjetos || []) {
+      // só aparece se alguma carta da fase mexe com ele (ou "sempre")
+      if (!obj.sempre && !(obj.passos || []).some(id => ids.has(id))) continue;
+      let figura = obj.inicio || null;
+      if (obj.inicioSem && !ids.has(obj.inicioSem.passo)) figura = obj.inicioSem.imagem;
+      for (const regra of s.montagemRegras || []) {
+        if (!(obj.id in regra)) continue;
+        if (regra.quando.every(id => feitos.has(id))) figura = regra[obj.id];
+      }
+      const lugar = document.createElement('div');
+      lugar.className = 'estado-objeto';
+      lugar.style.left = `${obj.x - obj.w / 2}%`;
+      lugar.style.bottom = `${100 - obj.y}%`;
+      lugar.style.width = `${obj.w}%`;
+      if (figura) {
+        const img = imagemDePeca(figura, 'estado-figura');
+        marcarNovo(img, obj.id + ':' + figura);
+        lugar.append(img);
+      }
+      if (problema && onde[problema] === obj.id) {
+        const estrela = document.createElement('span');
+        estrela.className = 'estado-opa';
+        estrela.setAttribute('aria-hidden', 'true');
+        lugar.append(estrela);
+      }
+      cena.append(lugar);
+    }
+    cena.setAttribute('role', 'img');
+    cena.setAttribute('aria-label', problema ? 'A montagem parou: um passo veio antes da hora' : 'A bancada seguindo as cartas');
+    const quadro = document.createElement('div');
+    quadro.className = 'estado-quadro';
+    quadro.append(cena);
+    caixa.append(quadro);
   }
 
   window.Montagem = { preparar, atualizar };
