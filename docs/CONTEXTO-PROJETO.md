@@ -37,6 +37,7 @@ Cole este arquivo no começo de uma sessão nova, ou peça para a sessão ler `d
 | `js/app.js` | menu, abertura, crachá, mapa (`LUGARES`), progresso e promoções, sanduíche obrigatório, agente secreto, tela cheia das configurações, tela final |
 | `js/montagem.js` | imagem que se monta ao lado do tabuleiro: `pilha` (sanduíche), `cena` (mochila), `grade` (robô andando numa grade, só código) ou `tirinha` (sem uso) |
 | `js/conclusao.js` | tela de lição (sem imagem, abre direto no texto) |
+| `js/pwa.js`, `sw.js`, `manifest.webmanifest`, `img/icones/` | modo instalável: registra o `sw.js` (gerado por `ferramentas/gerar-sw.js`), que guarda os 235 arquivos no aparelho; botão "Instalar o jogo" nas Configurações (no iPhone, a explicação). Só pelo site; com dois cliques no `index.html` nada muda |
 | `js/album.js` | "Meu álbum": uma figurinha (a imagem da lição) por nível concluído |
 | `js/final.js` | animação final (`fim1` a `fim6` + álbum completo) e certificado para imprimir |
 | `js/som.js`, `audio/musica-tema.mp3` | música, efeitos sintetizados (`acerto`, `erro`, `vitoria`, `clique`, `segredo`) e painel de configurações |
@@ -84,7 +85,8 @@ Todos têm **todas as imagens**: cartas, lições, ilustração do cartão (`pic
 - **Mapa:** marcadores são alfinetes com o rosto do cliente, posicionados em `LUGARES` (`js/app.js`) em % da imagem `img/story1.webp`. No celular o mapa rola e aparece o aviso "Arraste para ver a cidade" até a criança arrastar.
 - **Abertura:** 4 quadros (`story1` a `story4`) com a cidade nova. Os quadros passam sozinhos (pelo menos 7 s cada); o último espera o botão. A animação final faz o mesmo.
 - **Nível:** botão "Tela cheia" mostra a cena do chamado inteira (no celular, um ícone no canto da cena).
-- **Configurações:** botão "Configurações" no menu ou ícone de som no topo. Tem Música, Efeitos e **Tela cheia** (Fullscreen API; escondida no iPhone).
+- **Configurações:** botão "Configurações" no menu ou ícone de som no topo. Tem Música, Efeitos, **Tela cheia** (Fullscreen API; escondida no iPhone) e **Instalar o jogo** (só aparece pelo site, onde o navegador deixa instalar).
+- **Modo instalável (PWA):** pelo site, o jogo pode ser instalado como aplicativo (ícone do Robô-guia em roxo) e, depois da primeira visita, abre sem internet.
 - **Crachá** da tela "Quem é você, agente?": feito em HTML/CSS, com presilha, cargo, estrelas do cargo e código do agente.
 - **Agente secreto** (só para devs e para quem o dono contar):
   - **Como abrir:** **10 toques seguidos e rápidos** (no máximo 0,6 s entre eles) na terceira estrela do crachá. A estrela não muda nada visualmente.
@@ -113,7 +115,7 @@ Todos têm **todas as imagens**: cartas, lições, ilustração do cartão (`pic
   | Selos | 400×400 |
 
 - **Nomes:** `img/passos/<chamado>-NN.webp` e `img/licoes/<chamado>-N.webp`.
-- **Cache:** os `.js` e `.css` são carregados com `?v=AAAAMMDDHHMM`. **A cada mudança publicada, atualize esse número** no `index.html` e no `editor.html`. As imagens da abertura têm o próprio `?v=` em `js/app.js`, e o mapa tem o dele no `style.css`.
+- **Cache:** os `.js` e `.css` são carregados com `?v=AAAAMMDDHHMM`. **A cada mudança publicada, atualize esse número** no `index.html` e no `editor.html` e **rode `node ferramentas/gerar-sw.js`**, que refaz o `sw.js` com a versão e a lista de arquivos (sem isso, quem instalou o jogo continua com a versão antiga guardada). As imagens da abertura têm o próprio `?v=` em `js/app.js`, e o mapa tem o dele no `style.css`.
 - **localStorage:**
   - `algoritimando-perfil`, `algoritimando-progresso`, `algoritimando-som`, `algoritimando-som-ajustes`, `algoritimando-montagem`, `algoritimando-segredo`, `algoritimando-album`;
   - também existem `algoritimando-em-progresso` (protótipos), `algoritimando-editor-rascunho` e as chaves `algoritimando-previa*` (prévia do editor);
@@ -160,7 +162,7 @@ Todos têm **todas as imagens**: cartas, lições, ilustração do cartão (`pic
 
 1. **Revisão do professor das imagens novas:** as 10 lições sem comparação, o semáforo de duas luzes e a animação final. O dono recebeu uma página de revisão (artifact privado) com códigos L1–L10, S1–S7 e F1–F6 para o professor responder.
 2. **Montagem de Limonada, Escovar os dentes e Lavar as mãos:** bancada com objetos que mudam de estado a cada carta; para no primeiro passo fora de hora, com uma estrela no objeto. Prompts das 36 peças em `PROMPTS-MONTAGEM.md`; o código entra quando as imagens chegarem. (O Robô e o cubo já tem a montagem `grade`.)
-3. **Ideias não feitas:** testes automáticos no repositório (Playwright + GitHub Actions), modo instalável (PWA), painel de desempenho para o professor.
+3. **Ideias não feitas:** testes automáticos no repositório (Playwright + GitHub Actions), painel de desempenho para o professor.
 4. **Branches antigos no GitHub** para o dono apagar (a sessão não tem permissão para isso): `claude/affectionate-thompson-0v00r7`, `claude/lucid-darwin-3u020f` e `claude/new-session-pxqx2k`.
 
 ## Decisões já tomadas
